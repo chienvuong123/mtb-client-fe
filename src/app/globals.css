@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -12,15 +12,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-header {
+  background-color: rgba(115, 115, 115, 1) !important;
+}
+.header {
+  background-color: rgba(115, 115, 115, 1) !important;
+  height: 40px !important;
+}
+
+.main-menu {
+  background-color: rgba(115, 115, 115, 1);
+  /* line-height: 40px !important; */
+  height: 40px !important;
+  font-size: 14px;
+  font-weight: 500;
 }
