@@ -24,6 +24,14 @@ body {
 .header {
   background-color: rgba(115, 115, 115, 1) !important;
   height: 40px !important;
+  padding: 0 15px !important;
+}
+
+/* Medium screens and up (e.g., ≥768px) */
+@media (min-width: 768px) {
+  .header {
+    padding: 0 40px !important;
+  }
 }
 
 .main-menu {
