@@ -15,6 +15,7 @@ module.exports = {
                 neutralsGray225: "var(--Neutrals-Gray-25, #F6F7F9)",
                 black: "#181C26",
                 header: rgba(115, 115, 115, 1),
+                orange: rgb(249_93_3),
 
             },
             colors: {
@@ -30,6 +31,9 @@ module.exports = {
         },
         fontFamily: {
             manrope: ["Manrope", "sans-serif"],
+        },
+        screens: {
+            xs: '480px',
         },
     },
 };
