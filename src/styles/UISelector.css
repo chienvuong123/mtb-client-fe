@@ -1,0 +1,33 @@
+/* Target the main selector */
+.custom-rounded-select .ant-select-selector {
+  border-radius: 9999px !important;
+  height: 40px !important;
+  font-weight: 500 !important;
+}
+
+/* For hover effect */
+.custom-rounded-select:hover .ant-select-selector {
+  border-color: #3b82f6 !important; /* blue-500 in Tailwind */
+}
+
+/* Focused state - background changes to gray */
+.custom-rounded-select.ant-select-focused .ant-select-selector {
+  background-color: #f3f4f6 !important; /* gray-100 in Tailwind */
+  border-color: #3b82f6 !important; /* blue-500 in Tailwind */
+  box-shadow: none !important; /* Remove default focus shadow */
+}
+
+/* Arrow animation for dropdown toggle */
+.custom-rounded-select .ant-select-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* Arrow rotates when dropdown is open */
+.custom-rounded-select.ant-select-open .ant-select-arrow {
+  transform: rotate(180deg);
+}
+
+/* Style for the dropdown options */
+.ant-select-dropdown .ant-select-item {
+  font-weight: 500 !important;
+}
