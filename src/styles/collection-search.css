@@ -1,0 +1,40 @@
+/* Tăng kích thước của radio button */
+.custom-radio .ant-radio {
+  transform: scale(1.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+.custom-radio .ant-radio-wrapper {
+  gap: 0.5rem;
+  color: #909090 !important;
+  font-weight: 500;
+}
+
+/* Nếu cần tùy chỉnh thêm khi radio được chọn */
+.custom-radio .ant-radio-checked {
+  transform: scale(1.3);
+}
+
+/* Tùy chỉnh header của Panel */
+.custom-panel .ant-collapse-header {
+  color: #a3a3a3 !important;
+  font-weight: bold; /* Chữ đậm */
+}
+
+/* Tăng kích thước checkbox */
+.custom-checkbox .ant-checkbox {
+  transform: scale(1.3); /* Tăng kích thước */
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Đảm bảo khoảng cách hợp lý giữa checkbox và text */
+.custom-checkbox .ant-checkbox-wrapper {
+  gap: 8px;
+}
+
+/* Chỉ cho phép cuộn dọc trong Drawer */
+.custom-drawer .ant-drawer-body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: 100% !important;
+}

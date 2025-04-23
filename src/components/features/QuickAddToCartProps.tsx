@@ -26,7 +26,7 @@ const QuickAddToCart: React.FC<QuickAddToCartProps> = ({
         <div className="grid grid-cols-4 gap-2 mt-4 px-2">
           {sizes.map((size) => (
             <div
-              className="bg-white w-11 h-8 rounded-md font-medium flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-colors duration-200"
+              className="bg-white w-11 h-8 rounded-md font-medium flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-colors duration-200 "
               key={typeof size === 'string' ? size : size.value}
               onClick={() => onSizeSelect(size)}
             >

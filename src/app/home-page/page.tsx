@@ -9,6 +9,7 @@ import {
   todayProducts,
 } from '@/mocks/mockDataHomePage';
 import ProductCarousel from '@/components/products/ListProduct';
+import Link from 'next/link';
 
 const { Text } = Typography;
 
@@ -20,6 +21,7 @@ const HomePage = () => {
     setCategory(newCategory);
     setProducts(newCategory === 'male' ? maleProducts : femaleProducts);
   };
+
   return (
     <div>
       <Carousel autoplay arrows={true} dots={false}>
@@ -70,22 +72,24 @@ const HomePage = () => {
         >
           {products.map((product, index) => (
             <Col xs={9} sm={9} xl={4} key={index} className="flex-shrink-0">
-              <div className="relative overflow-hidden rounded-lg">
-                <Image
-                  preview={false}
-                  src={product.image}
-                  className="w-full !rounded-lg h-auto transition-transform duration-300 ease-in-out transform hover:scale-110"
-                  alt="anh"
-                />
-              </div>
-              <div className="text-center">
-                <Text
-                  className=" !font-bold uppercase 
+              <Link href="/collection">
+                <div className="relative overflow-hidden rounded-lg">
+                  <Image
+                    preview={false}
+                    src={product.image}
+                    className="w-full !rounded-lg h-auto transition-transform duration-300 ease-in-out transform hover:scale-110 cursor-pointer"
+                    alt="anh"
+                  />
+                </div>
+                <div className="text-center">
+                  <Text
+                    className=" !font-bold uppercase 
                     !sm:text-sm !md:text-base"
-                >
-                  {product.title}
-                </Text>
-              </div>
+                  >
+                    {product.title}
+                  </Text>
+                </div>
+              </Link>
             </Col>
           ))}
         </Row>
