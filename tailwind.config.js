@@ -30,7 +30,7 @@ module.exports = {
             },
         },
         fontFamily: {
-            manrope: ["Manrope", "sans-serif"],
+            pangea: ['Pangea', 'sans-serif'],
         },
         screens: {
             xs: '480px',
