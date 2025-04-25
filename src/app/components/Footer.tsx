@@ -1,6 +1,15 @@
 'use client';
 
-import { Button, Row, Col, Divider, Image, Space, Typography } from 'antd';
+import {
+  Button,
+  Row,
+  Col,
+  Divider,
+  Image,
+  Space,
+  Typography,
+  Card,
+} from 'antd';
 import {
   ArrowRightOutlined,
   MailOutlined,
@@ -12,7 +21,102 @@ const { Title, Text, Paragraph, Link } = Typography;
 const Footer = () => {
   return (
     <>
-      <div></div>
+      <div
+        className="coolclub-section"
+        style={{ backgroundColor: '#F5F5F5', padding: '24px' }}
+      >
+        <Row gutter={[16, 16]} align="middle">
+          {/* Left Section */}
+          <Col xs={24} lg={16}>
+            <Title level={5} style={{ fontWeight: 'bold' }}>
+              ĐẶC QUYỀN DÀNH CHO{' '}
+              <span style={{ color: '#374790' }}>374,790</span> THÀNH VIÊN
+              COOLCLUB
+            </Title>
+            <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
+              <Col xs={24} sm={8}>
+                <Card
+                  style={{
+                    backgroundColor: '#374790',
+                    color: 'white',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                  }}
+                  bordered={false}
+                >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                    Mời bạn bè
+                  </Text>
+                  <br />
+                  <Text style={{ color: 'white' }}>hoàn tiền 10% CoolCash</Text>
+                </Card>
+              </Col>
+              <Col xs={24} sm={8}>
+                <Card
+                  style={{
+                    backgroundColor: '#374790',
+                    color: 'white',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                  }}
+                  bordered={false}
+                >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                    Hoàn tiền đến 7%
+                  </Text>
+                  <br />
+                  <Text style={{ color: 'white' }}>(X2 vào thứ 6)</Text>
+                </Card>
+              </Col>
+              <Col xs={24} sm={8}>
+                <Card
+                  style={{
+                    backgroundColor: '#374790',
+                    color: 'white',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                  }}
+                  bordered={false}
+                >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                    Quà tặng sinh nhật
+                  </Text>
+                  <br />
+                  <Text style={{ color: 'white' }}>quà dịp đặc biệt</Text>
+                </Card>
+              </Col>
+            </Row>
+          </Col>
+
+          {/* Right Section */}
+          <Col xs={24} lg={8}>
+            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              <Title level={5} style={{ fontWeight: 'bold' }}>
+                HOẠT ĐỘNG GẦN ĐÂY
+              </Title>
+              <Text>
+                <strong>350</strong> Trung Phạm vừa được cộng{' '}
+                <strong>14.000 CoolCash</strong> từ ĐH <strong>#7xxx476</strong>
+              </Text>
+              <Text>
+                <strong>Thảo Hoàng</strong> vừa được nhận 1 phần quà sinh nhật
+              </Text>
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  backgroundColor: 'black',
+                  borderColor: 'black',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                }}
+              >
+                GIA NHẬP COOLCLUB NGAY →
+              </Button>
+            </Space>
+          </Col>
+        </Row>
+      </div>
       <div className="hidden lg:block bg-[#000] text-white px-12 py-8">
         <Row gutter={[68, 14]}>
           <Col span={9}>

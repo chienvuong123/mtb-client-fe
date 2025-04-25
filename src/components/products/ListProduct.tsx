@@ -1,4 +1,3 @@
-// components/ProductCarousel.tsx
 import React, { useRef } from 'react';
 import { Carousel, Tag } from 'antd';
 import { LeftOutlined, RightOutlined, StarFilled } from '@ant-design/icons';
