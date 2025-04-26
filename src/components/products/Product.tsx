@@ -34,20 +34,25 @@ interface ProductData {
 interface ProductProps {
   product: ProductData;
   commonSizes?: ICommonSizes[];
+  noHover?: boolean;
 }
 
-const Product = ({ product, commonSizes = [] }: ProductProps) => {
+const Product = ({ product, commonSizes = [], noHover }: ProductProps) => {
   return (
     <div>
       <div className="relative rounded-lg overflow-hidden">
         {/* image */}
-        <div className="group relative overflow-hidden">
+        <div
+          className={`relative overflow-hidden rounded-lg ${
+            noHover ? '' : 'group'
+          }`}
+        >
           <Image
             src={product.imageUrl}
             alt={product.title}
             width={500}
             height={500}
-            className="w-full sm: h-[240px] md:h-[260px] lg:h-[280px] xl:h-[350px] object-cover transition-opacity duration-500 group-hover:opacity-0"
+            className="w-full sm: h-[240px] md:h-[260px] lg:h-[280px] xl:h-[350px] rounded-lg object-cover transition-opacity duration-500 group-hover:opacity-0"
           />
           <Image
             src={product.hoverImageUrl}
@@ -56,6 +61,7 @@ const Product = ({ product, commonSizes = [] }: ProductProps) => {
             height={500}
             className="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
+
           <QuickAddToCart sizes={commonSizes} />
 
           {/* Đánh giá */}
