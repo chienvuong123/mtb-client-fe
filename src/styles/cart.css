@@ -1,0 +1,30 @@
+/* seletor */
+.custom-rounded-select-deals .ant-select-selector {
+  border-radius: 9999px !important;
+  height: 30px !important;
+  font-weight: 500 !important;
+  background: #f1f1f1 !important;
+  border: none !important;
+}
+
+.custom-rounded-select-deals .ant-select-selection-item {
+  font-size: 12px !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+}
+
+/* chọn size */
+.custom-rounded-select-cart-item .ant-select-selector {
+  border-radius: 9999px !important;
+  height: 30px !important;
+  font-weight: 500 !important;
+  background: #f1f1f1 !important;
+  border: none !important;
+  padding: 15px !important;
+}
+
+.custom-rounded-select-cart-item .ant-select-selection-item {
+  font-size: 14px !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+}
