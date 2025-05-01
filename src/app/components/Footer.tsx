@@ -15,16 +15,25 @@ import {
   MailOutlined,
   PhoneOutlined,
 } from '@ant-design/icons';
+import { usePathname } from 'next/navigation';
 
 const { Title, Text, Paragraph, Link } = Typography;
 
 const Footer = () => {
+  const pathname = usePathname();
+  const pathsWithoutFooter = ['/cart'];
+
+  const shouldShowFooter = !pathsWithoutFooter.some(
+    (path) => pathname === path || pathname?.startsWith(`${path}/`),
+  );
+
+  if (!shouldShowFooter) {
+    return null;
+  }
+
   return (
     <>
-      <div
-        className="coolclub-section"
-        style={{ backgroundColor: '#F5F5F5', padding: '24px' }}
-      >
+      <div className="bg-[#f1f1f1]">
         <Row gutter={[16, 16]} align="middle">
           {/* Left Section */}
           <Col xs={24} lg={16}>
