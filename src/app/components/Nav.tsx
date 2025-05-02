@@ -1,43 +1,89 @@
 'use client';
 
+import React, { useEffect, useRef } from 'react';
 import {
   Badge,
   Col,
   Flex,
-  Image,
   Input,
   Layout,
   Menu,
   MenuProps,
   Row,
+  Image,
 } from 'antd';
 import { MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons';
-import '@styles/dropdown.css';
+import DropdownContent from './product-navigation/DropdownContent';
+import DropdownSport from './product-navigation/DropdownSport';
+import DropdownWomen from './product-navigation/DropdownWomen';
+import DropdownCareShare from './product-navigation/DropdownCareShare';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-const items: MenuItem[] = [
-  {
-    label: 'Nam',
-    key: 'mail',
-  },
-  {
-    label: 'Nữ',
-    key: 'app',
-  },
-  {
-    label: 'Thể thao',
-    key: '2',
-  },
-  {
-    label: 'CARE & SHARE',
-    key: 'SubMenu',
-  },
-];
-const Nav = () => {
+const Nav: React.FC = () => {
+  const [activeDropdown, setActiveDropdown] = React.useState<string | null>(
+    null,
+  );
+  const [headerHeight, setHeaderHeight] = React.useState<number>(0);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // Calculate header height on mount and window resize
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        const height = headerRef.current.offsetHeight;
+        setHeaderHeight(height);
+      }
+    };
+
+    // Initial calculation
+    updateHeaderHeight();
+
+    // Update on resize
+    window.addEventListener('resize', updateHeaderHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
+  }, []);
+
+  const handleMenuHover = (key: string) => {
+    setActiveDropdown(key);
+  };
+
+  const handleMenuLeave = () => {
+    setActiveDropdown(null);
+  };
+
+  const items: MenuItem[] = [
+    {
+      label: <span className="dropdown-trigger">Nam</span>,
+      key: 'nam',
+      onMouseEnter: () => handleMenuHover('nam'),
+    },
+    {
+      label: <span className="dropdown-trigger">Nữ</span>,
+      key: 'nu',
+      onMouseEnter: () => handleMenuHover('nu'),
+    },
+    {
+      label: <span className="dropdown-trigger">Thể thao</span>,
+      key: 'the-thao',
+      onMouseEnter: () => handleMenuHover('the-thao'),
+    },
+    {
+      label: <span className="dropdown-trigger">CARE & SHARE</span>,
+      key: 'care-share',
+      onMouseEnter: () => handleMenuHover('care-share'),
+    },
+  ];
+
   return (
-    <div>
-      <Layout.Header className="!bg-white mb-3">
+    <div className="bg-white" ref={headerRef}>
+      <Layout.Header
+        className="!bg-white mb-3 sm: !px-4 md:!px-10"
+        onMouseLeave={handleMenuLeave}
+      >
         <Row className="flex !items-center">
           <Col xs={2} sm={2} md={0} lg={0} xl={0}>
             <Flex align="center" gap={24}>
@@ -45,7 +91,23 @@ const Nav = () => {
               <SearchOutlined className="text-2xl" />
             </Flex>
           </Col>
-          <Col md={8} lg={8} xl={8} className="mt-3">
+          <Col xs={0} sm={0} md={8} lg={8} xl={8}>
+            <Image
+              width={80}
+              src="/images/logo-coolmate.png"
+              preview={false}
+              alt="logo"
+              className="mt-3"
+            />
+          </Col>
+          <Col
+            xs={10}
+            sm={10}
+            md={0}
+            lg={0}
+            xl={0}
+            className="mt-3 mx-auto !flex justify-center md:!hidden lg:!hidden xl:!hidden"
+          >
             <Image
               width={80}
               src="/images/logo-coolmate.png"
@@ -61,7 +123,7 @@ const Nav = () => {
             />
           </Col>
           <Col
-            xs={3}
+            xs={4}
             sm={3}
             md={8}
             lg={8}
@@ -86,15 +148,21 @@ const Nav = () => {
           </Col>
         </Row>
       </Layout.Header>
-      <Row>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-          <Flex className="bg-[#404040] h-7" align="center" justify="center">
-            <span className="text-white font-medium text-sm">
-              Giảm 40k đơn từ 299k dành cho khách hàng mua lần đầu tại website!
-            </span>
-          </Flex>
-        </Col>
-      </Row>
+
+      {/* Global centered dropdown content */}
+      {activeDropdown && (
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[92%] bg-white shadow-lg z-40"
+          style={{ top: `${headerHeight - 27}px` }}
+          onMouseEnter={() => setActiveDropdown(activeDropdown)}
+          onMouseLeave={handleMenuLeave}
+        >
+          {activeDropdown === 'nam' && <DropdownContent />}
+          {activeDropdown === 'nu' && <DropdownWomen />}
+          {activeDropdown === 'the-thao' && <DropdownSport />}
+          {activeDropdown === 'care-share' && <DropdownCareShare />}
+        </div>
+      )}
     </div>
   );
 };

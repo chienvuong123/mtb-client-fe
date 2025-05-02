@@ -1,0 +1,44 @@
+/* Thông báo khuyến mại lần đầu vào web */
+.flex-promotion {
+  background-color: #404040;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.flex-promotion .text-promotion {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  text-align: center;
+}
+
+@media (max-width: 767.98px) {
+  .flex-promotion {
+    justify-content: flex-start;
+  }
+  .flex-promotion .text-promotion {
+    display: inline-block;
+    animation: marquee 12s linear infinite;
+    padding-left: 100%;
+  }
+}
+
+/* Định nghĩa animation marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Tùy chọn: Dừng animation khi hover */
+.flex-promotion .text-promotion:hover {
+  animation-play-state: paused;
+}

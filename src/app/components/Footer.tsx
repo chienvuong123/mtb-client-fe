@@ -8,7 +8,7 @@ import {
   Image,
   Space,
   Typography,
-  Card,
+  // Card,
 } from 'antd';
 import {
   ArrowRightOutlined,
@@ -33,9 +33,8 @@ const Footer = () => {
 
   return (
     <>
-      <div className="bg-[#f1f1f1]">
+      {/* <div className="bg-[#f1f1f1]">
         <Row gutter={[16, 16]} align="middle">
-          {/* Left Section */}
           <Col xs={24} lg={16}>
             <Title level={5} style={{ fontWeight: 'bold' }}>
               ĐẶC QUYỀN DÀNH CHO{' '}
@@ -97,7 +96,6 @@ const Footer = () => {
             </Row>
           </Col>
 
-          {/* Right Section */}
           <Col xs={24} lg={8}>
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
               <Title level={5} style={{ fontWeight: 'bold' }}>
@@ -125,7 +123,7 @@ const Footer = () => {
             </Space>
           </Col>
         </Row>
-      </div>
+      </div> */}
       <div className="hidden lg:block bg-[#000] text-white px-12 py-8">
         <Row gutter={[68, 14]}>
           <Col span={9}>
