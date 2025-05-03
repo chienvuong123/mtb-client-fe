@@ -43,24 +43,24 @@ const HomePage = () => {
       <section className="sm: py-7 sm: pl-3 md:py-10 md:pl-10">
         <Row className="mb-4 text-center">
           <Button
-            type={category === 'male' ? 'primary' : 'default'}
+            type="text"
             onClick={() => handleCategoryChange('male')}
-            className={`font-medium text-lg px-6 py-4 !rounded-full ${
+            className={`font-medium text-lg !px-6 !py-5 !rounded-full ${
               category === 'male'
-                ? 'bg-black text-white border-black'
-                : 'bg-white text-black border-black'
+                ? '!bg-black !text-white border-black'
+                : '!bg-[#e5e5e5] text-black border-black'
             }`}
             style={{ marginRight: 8 }}
           >
             ĐỒ NAM
           </Button>
           <Button
-            type={category === 'female' ? 'primary' : 'default'}
+            type="text"
             onClick={() => handleCategoryChange('female')}
-            className={`font-medium text-lg px-6 py-4 !rounded-full ${
+            className={`!font-medium text-lg !px-6 !py-5 !rounded-full ${
               category === 'female'
-                ? 'bg-black text-white border-black'
-                : 'bg-white text-black border-black'
+                ? '!bg-black !text-white border-black'
+                : '!bg-[#e5e5e5] text-black border-black'
             }`}
           >
             ĐỒ NỮ
