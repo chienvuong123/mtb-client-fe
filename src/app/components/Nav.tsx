@@ -140,9 +140,19 @@ const Nav: React.FC = () => {
                   className="w-[90%] !rounded-full placeholder:text-gray-400 placeholder:text-[10px] placeholder:font-medium"
                 />
               </Col>
-              <Image src="/icons/icon-account.svg" alt="Logo" className="" />
+              <Image
+                src="/icons/icon-account.svg"
+                alt="Logo"
+                className="cursor-pointer"
+                preview={false}
+              />
               <Badge count={3} size="small">
-                <Image src="/icons/icon-cart.svg" alt="Logo" className="" />
+                <Image
+                  src="/icons/icon-cart.svg"
+                  alt="Logo"
+                  className="cursor-pointer"
+                  preview={false}
+                />
               </Badge>
             </Flex>
           </Col>
@@ -153,7 +163,7 @@ const Nav: React.FC = () => {
       {activeDropdown && (
         <div
           className="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[92%] bg-white shadow-lg z-40"
-          style={{ top: `${headerHeight - 27}px` }}
+          style={{ top: `${headerHeight + 14}px` }}
           onMouseEnter={() => setActiveDropdown(activeDropdown)}
           onMouseLeave={handleMenuLeave}
         >

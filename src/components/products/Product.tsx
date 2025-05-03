@@ -39,7 +39,7 @@ interface ProductProps {
 
 const Product = ({ product, commonSizes = [], noHover }: ProductProps) => {
   return (
-    <div>
+    <div className="cursor-pointer">
       <div className="relative rounded-lg overflow-hidden">
         {/* image */}
         <div
