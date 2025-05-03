@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Badge,
   Col,
@@ -17,6 +17,7 @@ import DropdownContent from './product-navigation/DropdownContent';
 import DropdownSport from './product-navigation/DropdownSport';
 import DropdownWomen from './product-navigation/DropdownWomen';
 import DropdownCareShare from './product-navigation/DropdownCareShare';
+import RegisterPage from '../register/page';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -26,6 +27,17 @@ const Nav: React.FC = () => {
   );
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
   const headerRef = useRef<HTMLDivElement>(null);
+  const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
+
+  const showDrawer = () => {
+    setDrawerOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+    document.body.style.overflow = '';
+  };
 
   // Calculate header height on mount and window resize
   useEffect(() => {
@@ -145,6 +157,7 @@ const Nav: React.FC = () => {
                 alt="Logo"
                 className="cursor-pointer"
                 preview={false}
+                onClick={showDrawer}
               />
               <Badge count={3} size="small">
                 <Image
@@ -158,7 +171,7 @@ const Nav: React.FC = () => {
           </Col>
         </Row>
       </Layout.Header>
-
+      <RegisterPage open={isDrawerOpen} onClose={closeDrawer} />
       {/* Global centered dropdown content */}
       {activeDropdown && (
         <div

@@ -41,6 +41,7 @@ const CollectionPage = () => {
     });
 
     // Cập nhật danh sách sản phẩm
+    return filtered;
     setFilteredCollection(filtered);
   };
   return (
