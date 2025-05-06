@@ -422,7 +422,7 @@ const CartPage = () => {
                   </Text>
                 </div>
               </Col>
-              <button className="bg-[#c8102e] text-[#f9b804] text-base rounded-full px-14 py-3.5 uppercase font-medium">
+              <button className="bg-black text-white text-base rounded-full px-20 py-3.5 uppercase font-medium">
                 Đặt hàng
               </button>
             </Flex>

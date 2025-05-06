@@ -34,10 +34,6 @@ const Header = () => {
       label: 'VỀ COLMATE',
     },
     {
-      key: '3',
-      label: '84RISING*',
-    },
-    {
       key: '4',
       label: 'COOLXPRINT',
     },

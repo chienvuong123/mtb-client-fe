@@ -195,29 +195,29 @@ const ProductDetailPage = () => {
           <div className="flex items-center mt-6 relative">
             <Flex
               align="center"
-              className="rounded-full bg-yellow-400 overflow-hidden z-99"
+              className="rounded-full bg-[#525252] overflow-hidden z-99"
             >
               <button
                 onClick={handleDecrease}
-                className="flex items-center text-[#d12f26] justify-center h-10 w-10 font-bold text-lg m-0 p-0 border-0 cursor-pointer"
+                className="flex items-center text-white justify-center h-10 w-10 font-bold text-lg m-0 p-0 border-0 cursor-pointer"
               >
                 -
               </button>
 
-              <div className="lg:px-4 py-2 text-[#d12f26] font-bold text-lg">
+              <div className="lg:px-4 py-2 text-white font-bold text-lg">
                 {quantity}
               </div>
 
               <button
                 onClick={handleIncrease}
-                className="flex items-center text-[#d12f26] justify-center h-10 w-10 font-bold text-lg m-0 p-0 border-0 cursor-pointer"
+                className="flex items-center text-white justify-center h-10 w-10 font-bold text-lg m-0 p-0 border-0 cursor-pointer"
               >
                 +
               </button>
             </Flex>
 
             <button
-              className="group absolute right-0 w-full bg-[#c8102e] font-medium text-[#fcae12] text-sm rounded-full h-11 flex items-center justify-center cursor-pointer"
+              className="group absolute right-0 w-full bg-black hover:bg-[#d9d9d9] hover:text-black font-medium text-white text-sm rounded-full h-11 flex items-center justify-center cursor-pointer"
               style={{ flex: 1 }}
             >
               <ShoppingCartOutlined className="mr-2 text-xl !text-white group-hover:!text-black" />
