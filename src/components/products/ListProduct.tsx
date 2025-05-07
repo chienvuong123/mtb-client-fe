@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Carousel, Tag } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { CarouselRef } from 'antd/es/carousel';
 import Image from 'next/image';
 import QuickAddToCart from '../features/QuickAddToCartProps';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa6';
-import { IProduct } from '@/types/HomePage';
+import { IProduct } from '@/types/ProductType';
 
 interface ProductCarouselProps {
   title: string;
@@ -22,6 +22,25 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   const [selectedColors, setSelectedColors] = useState<Record<string, string>>(
     {},
   );
+
+  useEffect(() => {
+    const initialSelectedColors: Record<string, string> = {};
+
+    productList?.forEach((product) => {
+      // Tìm màu mặc định (is_main = true) hoặc màu đầu tiên
+      const mainImage = product.product_images?.find(
+        (img) => img.is_main === 'true',
+      );
+      const defaultColorId =
+        mainImage?.color_id || product.product_images?.[0]?.color_id || '';
+
+      if (defaultColorId) {
+        initialSelectedColors[product.id] = defaultColorId;
+      }
+    });
+
+    setSelectedColors(initialSelectedColors);
+  }, [productList]);
 
   const nextSlide = () => {
     if (carouselRef.current) {
@@ -109,16 +128,20 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       alt={'anh_san_pham'}
                       width={500}
                       height={500}
-                      className="w-full sm: h-[240px] md:h-[260px] lg:h-[350px] xl:h-[400px] 2xl:h-[450px] object-cover transition-opacity duration-500 group-hover:opacity-0 !rounded-xl"
+                      className="w-full sm: h-[240px] md:h-[260px] lg:h-[350px] xl:h-[350px] 2xl:h-[450px] !object-cover transition-opacity duration-500 group-hover:opacity-0 !rounded-xl"
                     />
                     <Image
                       src={mainImage?.image_hover}
                       alt={'anh_san_pham_hover'}
                       width={500}
                       height={500}
-                      className="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      className="w-full h-full !object-cover absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                     />
-                    <QuickAddToCart sizes={product.size} />
+                    <QuickAddToCart
+                      sizes={product.size}
+                      product={product}
+                      selectedColorId={selectedColorId}
+                    />
 
                     {/* Đánh giá */}
                     <div className="absolute top-2 left-2 w-full">
@@ -147,7 +170,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                           onClick={() =>
                             handleColorSelection(product.id, colorObj.id)
                           }
-                          className={`sm:w-7 sm:h-4 md:w-10 md:h-5 rounded-full mr-2 cursor-pointer ${
+                          className={`sm: w-7 sm: h-4 md:w-10 md:h-5 rounded-full mr-2 cursor-pointer ${
                             selectedColorId === colorObj.id
                               ? ' border-1 border-black'
                               : ''
@@ -203,7 +226,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
           <FaArrowRight />
         </button>
       </div>
-      <button className="md:hidden mb-6 border px-4 py-1 font-semibold rounded-full flex items-center justify-center cursor-pointer mx-auto">
+      <button className="md:hidden my-6 border px-4 py-1 font-semibold rounded-full flex items-center justify-center cursor-pointer mx-auto">
         Xem thêm
       </button>
     </div>

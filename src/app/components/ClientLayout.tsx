@@ -9,6 +9,7 @@ import { FaChevronUp } from 'react-icons/fa';
 import { FaPhone } from 'react-icons/fa6';
 import { RiCloseLargeFill } from 'react-icons/ri';
 import '@styles/nav.css';
+import FooterMobi from './FooterMobi';
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
@@ -65,7 +66,12 @@ function ClientLayout({ children }: ClientLayoutProps) {
       <div>{children}</div>
 
       {/* Footer */}
-      <Footer />
+      <div className="hidden lg:block">
+        <Footer />
+      </div>
+      <div className="lg:hidden sm: block">
+        <FooterMobi />
+      </div>
       <Flex
         align="center"
         justify="space-between"
