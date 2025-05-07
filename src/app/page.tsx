@@ -187,16 +187,26 @@ const Home = () => {
       </section> */}
       <Row>
         <Col className="relative overflow-hidden sm: !mt-5 md:!mt-0">
-          <div className="!w-[1600px] lg:!w-full">
+          <div className="hidden lg:block">
             <Image
               src="/images/banner/Casual_-_Desktopsds.webp"
               alt=""
               preview={false}
-              className="!w-full"
+              className="!w-full !object-left"
             />
           </div>
+          <div className="lg:hidden sm:block">
+            <Image
+              src="/images/banner/banner-cool-mobi.webp"
+              alt=""
+              preview={false}
+              className="!w-full !object-left"
+            />
+          </div>
+          {/* độ đậm của nền ảnh */}
+          <div className="lg:hidden sm: block absolute inset-0 bg-[#0000004D] bg-opacity-60 z-10"></div>
           <Space
-            className="absolute sm: left-3 md:left-4 xl:left-10 bottom-13 w-180 mb-6"
+            className="absolute sm: left-3 md:left-4 xl:left-10 bottom-13 w-180 mb-6 z-20"
             direction="vertical"
             size={'middle'}
           >
@@ -222,16 +232,26 @@ const Home = () => {
       </section>
       <Row>
         <Col className="relative overflow-hidden">
-          <div className="!w-[1600px] lg:!w-full">
+          <div className="hidden lg:block">
             <Image
-              src="/images/banner/Casual_-_Desktopsds.webp"
+              src="/images/banner/Running_-_Desktopz1.webp"
               alt=""
               preview={false}
               className="!w-full"
             />
           </div>
+          <div className="lg:hidden sm: block">
+            <Image
+              src="/images/banner/banner-run-mobi.webp"
+              alt=""
+              preview={false}
+              className="!w-full !object-left"
+            />
+          </div>
+          {/* độ đậm của nền ảnh */}
+          <div className="lg:hidden sm: block absolute inset-0 bg-[#0000004D] bg-opacity-60 z-10"></div>
           <Space
-            className="absolute sm: left-3 md:left-4 xl:left-10 bottom-13 w-180 mb-6"
+            className="absolute sm: left-3 md:left-4 xl:left-10 bottom-13 w-180 mb-6 z-20"
             direction="vertical"
             size={'middle'}
           >

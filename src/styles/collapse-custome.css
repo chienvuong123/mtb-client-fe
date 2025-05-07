@@ -1,0 +1,14 @@
+.custom-collapse .ant-collapse-header {
+  padding: 0 !important;
+  background: #000;
+}
+
+.custom-collapse .ant-collapse-content-box {
+  padding: 0 !important;
+  margin-bottom: 20px !important;
+}
+
+.custom-icon {
+  color: white;
+  font-size: 1.25rem;
+}

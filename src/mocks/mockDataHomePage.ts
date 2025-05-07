@@ -413,7 +413,7 @@ export const productHomePage = [
   },
   {
     id: '2',
-    name: 'Áo thun nam cao cấp',
+    name: 'Áo thun nam xanh ngọc',
     description:
       'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
     slug: 'ao-thun-nam-cao-cap',

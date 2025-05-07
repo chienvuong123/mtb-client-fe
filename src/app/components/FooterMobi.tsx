@@ -1,14 +1,26 @@
 'use client';
 
-import { Button, Row, Col, Divider, Image, Space, Typography } from 'antd';
+import {
+  Button,
+  Row,
+  Col,
+  Divider,
+  Image,
+  Space,
+  Typography,
+  CollapseProps,
+  Collapse,
+} from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
 import '@styles/activity-notifycation.css';
 import { notifications } from '@/mocks/mockNotifications';
+import { MdAdd, MdHorizontalRule } from 'react-icons/md';
+import '@styles/collapse-custome.css';
 
 const { Title, Text, Paragraph, Link } = Typography;
 
-const Footer = () => {
+const FooterMobi = () => {
   const pathname = usePathname();
   const pathsWithoutFooter = ['/cart'];
 
@@ -19,6 +31,187 @@ const Footer = () => {
   if (!shouldShowFooter) {
     return null;
   }
+
+  const items: CollapseProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          CoolCub
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Đăng kí thành viên
+          </Link>
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Ưu đãi & Đặc quyền
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Chính sách
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Chính sách đổi trả 60 ngày
+          </Link>
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Chính sách khuyến mại
+          </Link>
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Chính sách bảo mật
+          </Link>
+          <Link className="!text-white !text-xs hover:!text-[#ffff00]">
+            Chính sách giao hàng
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Coolmate.me
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Lịch sử thay đổi website
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '4',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Chăm sóc khách hàng
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Trải nghiệm mua sắm 100% hài lòng
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Hỏi đáp - FAQs
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '5',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Kiến thức sắc đẹp
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Hướng dẫn chọn size đồ nam
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Hướng dẫn chọn size đồ nữ
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Blog
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '6',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Tài liệu - Tuyển dụng
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Tuyển dụng
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Đăng ký bản quyền
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '7',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Về COOLMATE
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Quy tắc ứng xử của Coolmate
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Coolmate 101
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            DVKH xuất sắc
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Câu chuyện về Coolmate
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Nhà máy
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Care & Share
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Cam kết bền vững
+          </Link>
+          <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
+            Tầm nhìn 2030
+          </Link>
+        </Space>
+      ),
+    },
+    {
+      key: '8',
+      label: (
+        <Title level={5} className="!text-white !font-bold">
+          Địa chỉ liên hệ
+        </Title>
+      ),
+      children: (
+        <Space direction="vertical" size="small">
+          <Text className="!text-white">
+            <strong>Văn phòng Hà Nội:</strong> Tầng 3 Tòa nhà BRG, KM2, Đường
+            Phùng Hưng, Phường Phúc La, Quận Hà Đông, TP. Hà Nội
+          </Text>
+          <Text className="!text-white !text-[13px]">
+            <strong>Trung tâm vận hành Hà Nội:</strong> Lô C8, KCN Lại Yên, Xã
+            Lại Yên, Huyện Hoài Đức, Thành phố Hà Nội
+          </Text>
+          <Text className="!text-white !text-[13px] ">
+            <strong>Văn phòng và Trung tâm vận hành TP. HCM:</strong> Lô C3,
+            đường D2, KCN Cát Lái, Thạnh Mỹ Lợi, TP. Thủ Đức, TP. Hồ Chí Minh.
+          </Text>
+          <Text className="!text-white !text-[13px] ">
+            <strong>Trung tâm R&D:</strong> T6-01, The Manhattan Vinhomes Grand
+            Park, Long Bình, TP. Thủ Đức
+          </Text>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -137,30 +330,9 @@ const Footer = () => {
           </Col>
         </Row>
       </div>
-      <div className="hidden lg:block bg-[#000] text-white px-12 py-8">
+      <div className="bg-[#000] text-white px-4 py-8 overflow-hidden">
         <Row gutter={[68, 14]}>
-          <Col span={9}>
-            <Title level={3} className="!text-white !font-bold">
-              COOLMATE lắng nghe bạn!
-            </Title>
-
-            <Paragraph className="!text-white text-base pb-6">
-              Chúng tôi luôn trân trọng và mong đợi nhận được mọi ý kiến đóng
-              góp từ khách hàng để có thể nâng cấp trải nghiệm dịch vụ và sản
-              phẩm tốt hơn nữa.
-            </Paragraph>
-
-            <Button
-              type="primary"
-              size="large"
-              className="text-base uppercase !bg-[#2f5acf] !rounded-full !px-10 !py-7 flex items-center space-x-3 !font-medium"
-            >
-              <span style={{ marginRight: '8px' }}>Đóng góp ý kiến</span>
-              <ArrowRightOutlined />
-            </Button>
-          </Col>
-
-          <Col span={6} className="flex flex-col">
+          <Col span={24} className="flex flex-col">
             <Space direction="vertical" size="middle">
               <Space align="center" size="middle">
                 <Image
@@ -205,11 +377,32 @@ const Footer = () => {
                 </div>
               </Space>
             </Space>
+            <Divider style={{ borderColor: 'gray', margin: '10px 0' }} />
           </Col>
+          <Col span={24}>
+            <Title level={4} className="!text-white !font-bold">
+              COOLMATE lắng nghe bạn!
+            </Title>
 
+            <Paragraph className="!text-white !text-[13px]">
+              Chúng tôi luôn trân trọng và mong đợi nhận được mọi ý kiến đóng
+              góp từ khách hàng để có thể nâng cấp trải nghiệm dịch vụ và sản
+              phẩm tốt hơn nữa.
+            </Paragraph>
+
+            <Button
+              type="primary"
+              size="large"
+              className="!text-sm uppercase !bg-white !text-black !rounded-full !px-4 !py-2 flex items-center !font-medium"
+            >
+              <span className="">Đóng góp ý kiến</span>
+              <ArrowRightOutlined />
+            </Button>
+            <Divider style={{ borderColor: 'gray', margin: '12px 0' }} />
+          </Col>
           <Col
-            span={9}
-            className="!flex !justify-center !items-center lg:space-x-8 xl:space-x-14"
+            span={24}
+            className="!flex !justify-center !items-center space-x-14"
           >
             <Image
               preview={false}
@@ -250,149 +443,20 @@ const Footer = () => {
         </Row>
         <Divider style={{ borderColor: 'gray' }} />
         <Row>
-          <Col xs={24} sm={12} md={6} lg={4}>
-            <Title level={5} className="!text-white !font-bold">
-              COOLCLUB
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Đăng kí thành viên
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Ưu đãi & Đặc quyền
-              </Link>
-            </Space>
-
-            <Title level={5} className="!text-white mt-8 pb-3">
-              TÀI LIỆU - TUYỂN DỤNG
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Tuyển dụng
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Đăng ký bản quyền
-              </Link>
-            </Space>
-          </Col>
-
-          {/* CHÍNH SÁCH Column */}
-          <Col xs={24} sm={12} md={6} lg={5}>
-            <Title level={5} className="!text-white pb-3">
-              CHÍNH SÁCH
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Chính sách đổi trả 60 ngày
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Chính sách khuyến mãi
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Chính sách bảo mật
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Chính sách giao hàng
-              </Link>
-            </Space>
-
-            <Title level={5} className="!text-white mt-8 pb-3">
-              COOLMATE.ME
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Lịch sử thay đổi website
-              </Link>
-            </Space>
-          </Col>
-
-          {/* CHĂM SÓC KHÁCH HÀNG Column */}
-          <Col xs={24} sm={12} md={6} lg={5}>
-            <Title level={5} className="!text-white pb-3">
-              CHĂM SÓC KHÁCH HÀNG
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Trải nghiệm mua sắm 100% hài lòng
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Hỏi đáp - FAQs
-              </Link>
-            </Space>
-
-            <Title level={5} className="!text-white mt-8 pb-3">
-              KIẾN THỨC MẶC ĐẸP
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Hướng dẫn chọn size đồ nam
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Hướng dẫn chọn size đồ nữ
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Blog
-              </Link>
-            </Space>
-          </Col>
-
-          {/* VỀ COOLMATE Column */}
-          <Col xs={24} sm={12} md={6} lg={5}>
-            <Title level={5} className="!text-white pb-3">
-              VỀ COOLMATE
-            </Title>
-            <Space direction="vertical" size="small">
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Quy tắc ứng xử của Coolmate
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Coolmate 101
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                DVKH xuất sắc
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Câu chuyện về Coolmate
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Nhà máy
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Care & Share
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Cam kết bền vững
-              </Link>
-              <Link className="!text-white !text-[13px] hover:!text-[#ffff00]">
-                Tầm nhìn 2030
-              </Link>
-            </Space>
-          </Col>
-
-          {/* ĐỊA CHỈ LIÊN HỆ Column */}
-          <Col xs={24} md={12} lg={5}>
-            <Title level={5} className="!text-white pb-3">
-              ĐỊA CHỈ LIÊN HỆ
-            </Title>
-            <Space direction="vertical" size="small">
-              <Text className="!text-white">
-                <strong>Văn phòng Hà Nội:</strong> Tầng 3 Tòa nhà BRG, KM2,
-                Đường Phùng Hưng, Phường Phúc La, Quận Hà Đông, TP. Hà Nội
-              </Text>
-              <Text className="!text-white !text-[13px]">
-                <strong>Trung tâm vận hành Hà Nội:</strong> Lô C8, KCN Lại Yên,
-                Xã Lại Yên, Huyện Hoài Đức, Thành phố Hà Nội
-              </Text>
-              <Text className="!text-white !text-[13px] ">
-                <strong>Văn phòng và Trung tâm vận hành TP. HCM:</strong> Lô C3,
-                đường D2, KCN Cát Lái, Thạnh Mỹ Lợi, TP. Thủ Đức, TP. Hồ Chí
-                Minh.
-              </Text>
-              <Text className="!text-white !text-[13px] ">
-                <strong>Trung tâm R&D:</strong> T6-01, The Manhattan Vinhomes
-                Grand Park, Long Bình, TP. Thủ Đức
-              </Text>
-            </Space>
+          <Col xs={24}>
+            <Collapse
+              ghost
+              expandIcon={({ isActive }) =>
+                isActive ? (
+                  <MdHorizontalRule className="!text-white !text-xl" />
+                ) : (
+                  <MdAdd className="!text-white !text-xl" />
+                )
+              }
+              expandIconPosition="end"
+              items={items}
+              className="custom-collapse"
+            />
           </Col>
         </Row>
         <Divider style={{ borderColor: 'gray' }} />
@@ -412,7 +476,7 @@ const Footer = () => {
             </Space>
           </Col>
 
-          <Col xs={24} lg={8}>
+          <Col xs={24}>
             <Row gutter={16} justify="end">
               <Col>
                 <Image
@@ -454,4 +518,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterMobi;
