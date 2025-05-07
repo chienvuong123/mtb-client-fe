@@ -1,0 +1,35 @@
+/* Container thông báo hoạt động */
+.activity-notification {
+  background-color: #f1f1f1;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Nội dung chạy ngang */
+.activity-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #505050;
+  white-space: nowrap;
+  display: inline-block;
+  animation: activity-marquee 80s linear infinite;
+}
+
+/* Hiệu ứng marquee */
+@keyframes activity-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Tạm dừng khi hover */
+.activity-text:hover {
+  animation-play-state: paused;
+}

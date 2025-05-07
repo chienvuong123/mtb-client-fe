@@ -71,7 +71,7 @@ const ProductColorSizePicker: React.FC<ProductColorSizePickerProps> = ({
         <Row justify="space-between" className="mb-2">
           <Col>
             <Text strong className="sm: !text-xs md:!text-sm">
-              Kích thước Áo:{' '}
+              Kích thước:{' '}
               <span className="font-bold">{selectedColorSize?.label}</span>
               <span>{`(${selectedColorSize?.height} | ${selectedColorSize?.weight})`}</span>
             </Text>
@@ -98,9 +98,9 @@ const ProductColorSizePicker: React.FC<ProductColorSizePickerProps> = ({
                   </>
                 }
                 placement="bottom"
+                color="white"
                 styles={{
                   body: {
-                    backgroundColor: 'white',
                     color: 'black',
                     fontWeight: 500,
                     paddingLeft: 15,

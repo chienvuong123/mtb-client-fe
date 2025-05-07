@@ -1,21 +1,14 @@
 'use client';
 
-import {
-  Button,
-  Row,
-  Col,
-  Divider,
-  Image,
-  Space,
-  Typography,
-  // Card,
-} from 'antd';
+import { Button, Row, Col, Divider, Image, Space, Typography } from 'antd';
 import {
   ArrowRightOutlined,
   MailOutlined,
   PhoneOutlined,
 } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
+import '@styles/activity-notifycation.css';
+import { notifications } from '@/mocks/mockNotifications';
 
 const { Title, Text, Paragraph, Link } = Typography;
 
@@ -33,97 +26,121 @@ const Footer = () => {
 
   return (
     <>
-      {/* <div className="bg-[#f1f1f1]">
-        <Row gutter={[16, 16]} align="middle">
-          <Col xs={24} lg={16}>
-            <Title level={5} style={{ fontWeight: 'bold' }}>
-              ĐẶC QUYỀN DÀNH CHO{' '}
-              <span style={{ color: '#374790' }}>374,790</span> THÀNH VIÊN
+      <div className="bg-[#f1f1f1] sm: mx-3 md:mx-4 xl:mx-10 mb-10 sm: px-7 xl:px-10 py-6 rounded-2xl">
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={14}>
+            <span className="sm: text-base md:text-2xl font-bold">
+              ĐẶC QUYỀN DÀNH CHO <br className="block sm:hidden" />{' '}
+              <span className="text-[#273bcd]">374,790</span> THÀNH VIÊN
               COOLCLUB
-            </Title>
-            <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
+            </span>
+            <Row gutter={[32, 16]} className="!pt-6">
               <Col xs={24} sm={8}>
-                <Card
-                  style={{
-                    backgroundColor: '#374790',
-                    color: 'white',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                  }}
-                  bordered={false}
-                >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                    Mời bạn bè
-                  </Text>
-                  <br />
-                  <Text style={{ color: 'white' }}>hoàn tiền 10% CoolCash</Text>
-                </Card>
+                <div className="bg-[#273bcd] p-3 rounded-xl relativesm:h-auto xl:h-auto lg:h-30">
+                  <div className="flex flex-col">
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      Mời bạn bè
+                    </p>
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      hoàn tiền 10% CoolCash
+                    </p>
+                  </div>
+                  <div className="absolute bottom-2 right-6">
+                    <Image
+                      src="/images/banner/icon1.webp"
+                      alt="ban-be"
+                      width={25}
+                    />
+                  </div>
+                </div>
               </Col>
               <Col xs={24} sm={8}>
-                <Card
-                  style={{
-                    backgroundColor: '#374790',
-                    color: 'white',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                  }}
-                  bordered={false}
-                >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                    Hoàn tiền đến 7%
-                  </Text>
-                  <br />
-                  <Text style={{ color: 'white' }}>(X2 vào thứ 6)</Text>
-                </Card>
+                <div className="bg-[#273bcd] p-3 rounded-xl relative sm:h-auto xl:h-auto lg:h-30">
+                  <div className="flex flex-col">
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      Hoàn tiền đến 7%
+                    </p>
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      (x2 vào thứ 6)
+                    </p>
+                  </div>
+                  <div className="absolute bottom-2 right-2">
+                    <Image
+                      src="/images/banner/icon2.webp"
+                      alt="giam-gia"
+                      width={45}
+                    />
+                  </div>
+                </div>
               </Col>
               <Col xs={24} sm={8}>
-                <Card
-                  style={{
-                    backgroundColor: '#374790',
-                    color: 'white',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                  }}
-                  bordered={false}
-                >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                    Quà tặng sinh nhật
-                  </Text>
-                  <br />
-                  <Text style={{ color: 'white' }}>quà dịp đặc biệt</Text>
-                </Card>
+                <div className="bg-[#273bcd] p-3 rounded-xl relative sm:h-auto xl:h-auto lg:h-30">
+                  <div className="flex flex-col">
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      Quà tặng sinh nhật,
+                    </p>
+                    <p className="text-white font-semibold text-lg tracking-[-1]">
+                      quà dịp đặc biệt
+                    </p>
+                  </div>
+                  <div className="absolute bottom-2 right-2">
+                    <Image
+                      src="/images/banner/icon3.webp"
+                      alt="qua-tang"
+                      width={30}
+                    />
+                  </div>
+                </div>
               </Col>
             </Row>
           </Col>
 
-          <Col xs={24} lg={8}>
-            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-              <Title level={5} style={{ fontWeight: 'bold' }}>
+          <Col xs={24} lg={8} className="!flex mx-auto w-full">
+            <Space direction="vertical" className="w-full sm: mt-7 md:mt-0">
+              <Title className="!text-[#333333] sm: !text-base md:!text-2xl !font-bold text-center ">
                 HOẠT ĐỘNG GẦN ĐÂY
               </Title>
-              <Text>
-                <strong>350</strong> Trung Phạm vừa được cộng{' '}
-                <strong>14.000 CoolCash</strong> từ ĐH <strong>#7xxx476</strong>
-              </Text>
-              <Text>
-                <strong>Thảo Hoàng</strong> vừa được nhận 1 phần quà sinh nhật
-              </Text>
-              <Button
-                type="primary"
-                size="large"
-                style={{
-                  backgroundColor: 'black',
-                  borderColor: 'black',
-                  borderRadius: '8px',
-                  fontWeight: 'bold',
-                }}
-              >
-                GIA NHẬP COOLCLUB NGAY →
-              </Button>
+              <div className="flex flex-col">
+                <div className="activity-notification flex items-center bg-gray-200 h-8">
+                  <div className="activity-text flex whitespace-nowrap animate-marquee space-x-3">
+                    {notifications.map((item, index) => (
+                      <span
+                        key={index}
+                        className="text-[#505050] sm: text-sm md:text-base font-medium"
+                      >
+                        {item.name}{' '}
+                        <span className="text-black">{item.account}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="activity-notification flex items-center bg-gray-200 h-8">
+                  <div className="activity-text flex whitespace-nowrap animate-marquee space-x-3">
+                    {notifications.map((item, index) => (
+                      <span
+                        key={index}
+                        className="text-[#505050] sm: text-sm md:text-base font-medium"
+                      >
+                        {item.name}{' '}
+                        <span className="text-black">{item.account}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center mt-2">
+                <Button
+                  type="primary"
+                  size="large"
+                  className="!bg-black !font-semibold !rounded-full !px-6 !py-5.5"
+                >
+                  GIA NHẬP COOLCLUB NGAY →
+                </Button>
+              </div>
             </Space>
           </Col>
         </Row>
-      </div> */}
+      </div>
       <div className="hidden lg:block bg-[#000] text-white px-12 py-8">
         <Row gutter={[68, 14]}>
           <Col span={9}>

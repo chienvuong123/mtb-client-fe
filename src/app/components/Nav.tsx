@@ -18,6 +18,7 @@ import DropdownSport from './product-navigation/DropdownSport';
 import DropdownWomen from './product-navigation/DropdownWomen';
 import DropdownCareShare from './product-navigation/DropdownCareShare';
 import RegisterPage from '../register/page';
+import SearchPage from './Search';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -28,6 +29,7 @@ const Nav: React.FC = () => {
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
   const headerRef = useRef<HTMLDivElement>(null);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
 
   const showDrawer = () => {
     setDrawerOpen(true);
@@ -37,6 +39,14 @@ const Nav: React.FC = () => {
   const closeDrawer = () => {
     setDrawerOpen(false);
     document.body.style.overflow = '';
+  };
+
+  const handleShowSearch = () => {
+    setShowSearch(true);
+  };
+
+  const handleCloseShowSearch = () => {
+    setShowSearch(false);
   };
 
   // Calculate header height on mount and window resize
@@ -149,6 +159,7 @@ const Nav: React.FC = () => {
                   size="large"
                   placeholder="Tìm kiếm sản phẩm..."
                   prefix={<SearchOutlined />}
+                  onClick={handleShowSearch}
                   className="w-[90%] !rounded-full placeholder:text-gray-400 placeholder:text-[10px] placeholder:font-medium"
                 />
               </Col>
@@ -184,6 +195,11 @@ const Nav: React.FC = () => {
           {activeDropdown === 'nu' && <DropdownWomen />}
           {activeDropdown === 'the-thao' && <DropdownSport />}
           {activeDropdown === 'care-share' && <DropdownCareShare />}
+        </div>
+      )}
+      {showSearch && (
+        <div className="absolute z-99 top-0.5">
+          <SearchPage onClose={handleCloseShowSearch} />
         </div>
       )}
     </div>

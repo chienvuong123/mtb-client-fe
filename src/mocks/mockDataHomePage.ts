@@ -300,3 +300,519 @@ export const runningProducts = [
     hoverImageUrl: '/images/product/hv-10.webp',
   },
 ];
+
+export const productHomePage = [
+  {
+    id: '1',
+    name: 'Áo thun nam cao cấp',
+    description:
+      'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
+    slug: 'ao-thun-nam-cao-cap',
+    isNew: true,
+    size: [
+      {
+        id: 'size_1',
+        name: 's',
+      },
+      {
+        id: 'size_2',
+        name: 'm',
+      },
+      {
+        id: 'size_3',
+        name: 'l',
+      },
+      {
+        id: 'size_4',
+        name: 'xl',
+      },
+    ],
+    color: [
+      {
+        id: 'color_1',
+        color: 'đen',
+        color_img: '/images/prod/bg-1.jpg',
+      },
+      {
+        id: 'color_2',
+        color: 'trắng',
+        color_img: '/images/prod/bg-2.jpg',
+      },
+      {
+        id: 'color_3',
+        color: 'màu be',
+        color_img: '/images/prod/bg-4.webp',
+      },
+      {
+        id: 'color_4',
+        color: 'xanh navy',
+        color_img: '/images/prod/bg-3.webp',
+      },
+    ],
+    product_style_id: 'style_001',
+    product_material_id: 'material_001',
+    original_price: '300000',
+    discount: '20',
+    discount_price: '240000',
+    avg_rating: '4.5',
+    rating_count: '120',
+    product_images: [
+      {
+        id: 'img_1',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p1.webp',
+        image_hover: '/images/prod/hv1.webp',
+        is_main: 'true',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: '/images/prod/hv1.webp',
+        },
+      },
+      {
+        id: 'img_2',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: '/images/prod/hv2.webp',
+        },
+      },
+      {
+        id: 'img_3',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p2.webp',
+        image_hover: '/images/prod/hv2.webp',
+        is_main: 'false',
+        color_id: 'color_2',
+        color: {
+          id: 'color_2',
+          color: 'trắng',
+          color_img: '/images/prod/hv3.webp',
+        },
+      },
+      {
+        id: 'img_4',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'false',
+        color_id: 'color_4',
+        color: {
+          id: 'color_4',
+          color: 'xanh navy',
+          color_img: '/images/prod/hv4.webp',
+        },
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Áo thun nam cao cấp',
+    description:
+      'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
+    slug: 'ao-thun-nam-cao-cap',
+    size: [
+      {
+        id: 'size_1',
+        name: 's',
+      },
+      {
+        id: 'size_2',
+        name: 'm',
+      },
+      {
+        id: 'size_3',
+        name: 'l',
+      },
+      {
+        id: 'size_4',
+        name: 'xl',
+      },
+    ],
+    color: [
+      {
+        id: 'color_1',
+        color: 'đen',
+        color_img: '/images/prod/bg-1.jpg',
+      },
+      {
+        id: 'color_2',
+        color: 'trắng',
+        color_img: '/images/prod/bg-2.jpg',
+      },
+      {
+        id: 'color_4',
+        color: 'xanh navy',
+        color_img: '/images/prod/bg-3.webp',
+      },
+    ],
+    product_style_id: 'style_001',
+    product_material_id: 'material_001',
+    original_price: '300000',
+    discount: '20',
+    discount_price: '240000',
+    avg_rating: '4.5',
+    rating_count: '120',
+    product_images: [
+      {
+        id: 'img_1',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p1.webp',
+        image_hover: '/images/prod/hv1.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: '/images/prod/hv1.webp',
+        },
+      },
+      {
+        id: 'img_2',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'true',
+        color_id: 'color_4',
+        color: {
+          id: 'color_4',
+          color: 'đen',
+          color_img: '/images/prod/hv2.webp',
+        },
+      },
+      {
+        id: 'img_3',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p2.webp',
+        image_hover: '/images/prod/hv2.webp',
+        is_main: 'false',
+        color_id: 'color_2',
+        color: {
+          id: 'color_2',
+          color: 'trắng',
+          color_img: '/images/prod/hv3.webp',
+        },
+      },
+      {
+        id: 'img_4',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p3.webp',
+        image_hover: '/images/prod/hv3.webp',
+        is_main: 'false',
+        color_id: 'color_3',
+        color: {
+          id: 'color_3',
+          color: 'xanh navy',
+          color_img: '/images/prod/hv4.webp',
+        },
+      },
+    ],
+  },
+  {
+    id: '3',
+    name: 'áo thun nam cao cấp',
+    description:
+      'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
+    slug: 'ao-thun-nam-cao-cap',
+    isNew: true,
+    size: [
+      {
+        id: 'size_1',
+        name: 's',
+      },
+      {
+        id: 'size_2',
+        name: 'm',
+      },
+      {
+        id: 'size_3',
+        name: 'l',
+      },
+      {
+        id: 'size_4',
+        name: 'xl',
+      },
+    ],
+    color: [
+      {
+        id: 'color_1',
+        color: 'đen',
+        color_img: '/images/prod/bg-1.jpg',
+      },
+      {
+        id: 'color_2',
+        color: 'trắng',
+        color_img: '/images/prod/bg-2.jpg',
+      },
+    ],
+    product_style_id: 'style_001',
+    product_material_id: 'material_001',
+    original_price: '300000',
+    discount: '20',
+    discount_price: '240000',
+    avg_rating: '4.5',
+    rating_count: '120',
+    product_images: [
+      {
+        id: 'img_1',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p1.webp',
+        image_hover: '/images/prod/hv1.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_2',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_3',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p2.webp',
+        image_hover: '/images/prod/hv2.webp',
+        is_main: 'false',
+        color_id: 'color_2',
+        color: {
+          id: 'color_2',
+          color: 'trắng',
+          color_img: 'https://example.com/colors/white.png',
+        },
+      },
+      {
+        id: 'img_4',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p3.webp',
+        image_hover: '/images/prod/hv3.webp',
+        is_main: 'true',
+        color_id: 'color_3',
+        color: {
+          id: 'color_3',
+          color: 'xanh navy',
+          color_img: 'https://example.com/colors/navy.png',
+        },
+      },
+    ],
+  },
+  {
+    id: '4',
+    name: 'áo thun nam cao cấp',
+    description:
+      'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
+    slug: 'ao-thun-nam-cao-cap',
+    isNew: true,
+    size: [
+      {
+        id: 'size_1',
+        name: 's',
+      },
+      {
+        id: 'size_2',
+        name: 'm',
+      },
+      {
+        id: 'size_3',
+        name: 'l',
+      },
+      {
+        id: 'size_4',
+        name: 'xl',
+      },
+    ],
+    color: [
+      {
+        id: 'color_2',
+        color: 'trắng',
+        color_img: '/images/prod/bg-2.jpg',
+      },
+      {
+        id: 'color_4',
+        color: 'xanh navy',
+        color_img: '/images/prod/bg-3.webp',
+      },
+    ],
+    product_style_id: 'style_001',
+    product_material_id: 'material_001',
+    original_price: '300000',
+    discount: '20',
+    discount_price: '240000',
+    avg_rating: '4.5',
+    rating_count: '120',
+    product_images: [
+      {
+        id: 'img_1',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p1.webp',
+        image_hover: '/images/prod/hv1.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_2',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_3',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p2.webp',
+        image_hover: '/images/prod/hv2.webp',
+        is_main: 'true',
+        color_id: 'color_2',
+        color: {
+          id: 'color_2',
+          color: 'trắng',
+          color_img: 'https://example.com/colors/white.png',
+        },
+      },
+      {
+        id: 'img_4',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p3.webp',
+        image_hover: '/images/prod/hv3.webp',
+        is_main: 'false',
+        color_id: 'color_3',
+        color: {
+          id: 'color_3',
+          color: 'xanh navy',
+          color_img: 'https://example.com/colors/navy.png',
+        },
+      },
+    ],
+  },
+  {
+    id: '5',
+    name: 'áo thun nam cao cấp',
+    description:
+      'áo thun nam phong cách hiện đại, chất liệu cotton thoáng mát, phù hợp cho mọi dịp.',
+    slug: 'ao-thun-nam-cao-cap',
+    size: [
+      {
+        id: 'size_1',
+        name: 's',
+      },
+      {
+        id: 'size_2',
+        name: 'm',
+      },
+      {
+        id: 'size_3',
+        name: 'l',
+      },
+      {
+        id: 'size_4',
+        name: 'xl',
+      },
+    ],
+    color: [
+      {
+        id: 'color_1',
+        color: 'đen',
+        color_img: '/images/prod/bg-1.jpg',
+      },
+      {
+        id: 'color_2',
+        color: 'trắng',
+        color_img: '/images/prod/bg-2.jpg',
+      },
+      {
+        id: 'color_4',
+        color: 'xanh navy',
+        color_img: '/images/prod/bg-3.webp',
+      },
+    ],
+    product_style_id: 'style_001',
+    product_material_id: 'material_001',
+    original_price: '300000',
+    discount: '20',
+    discount_price: '240000',
+    avg_rating: '4.5',
+    rating_count: '120',
+    product_images: [
+      {
+        id: 'img_1',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p1.webp',
+        image_hover: '/images/prod/hv1.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_2',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p4.webp',
+        image_hover: '/images/prod/hv4.webp',
+        is_main: 'false',
+        color_id: 'color_1',
+        color: {
+          id: 'color_1',
+          color: 'đen',
+          color_img: 'https://example.com/colors/black.png',
+        },
+      },
+      {
+        id: 'img_3',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p2.webp',
+        image_hover: '/images/prod/hv2.webp',
+        is_main: 'false',
+        color_id: 'color_2',
+        color: {
+          id: 'color_2',
+          color: 'trắng',
+          color_img: 'https://example.com/colors/white.png',
+        },
+      },
+      {
+        id: 'img_4',
+        product_id: 'prod_001',
+        image_url: '/images/prod/p3.webp',
+        image_hover: '/images/prod/hv3.webp',
+        is_main: 'true',
+        color_id: 'color_3',
+        color: {
+          id: 'color_3',
+          color: 'xanh navy',
+          color_img: 'https://example.com/colors/navy.png',
+        },
+      },
+    ],
+  },
+];

@@ -2,8 +2,8 @@
 import React from 'react';
 
 interface Size {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
 }
 
 type SizeType = Size | string;
@@ -23,14 +23,14 @@ const QuickAddToCart: React.FC<QuickAddToCartProps> = ({
         <span className="text-[#231f20] text-sm font-bold">
           Thêm nhanh vào giỏ hàng +
         </span>
-        <div className="grid grid-cols-4 gap-2 mt-4 px-2">
+        <div className="flex flex-wrap gap-2 mt-4 px-2">
           {sizes.map((size) => (
             <div
-              className="bg-white w-11 h-8 rounded-md font-medium flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-colors duration-200 "
-              key={typeof size === 'string' ? size : size.value}
+              className="bg-white w-11 h-8 rounded-md font-medium flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-colors duration-200 uppercase"
+              key={typeof size === 'string' ? size : size.id}
               onClick={() => onSizeSelect(size)}
             >
-              {typeof size === 'string' ? size : size.label}
+              {typeof size === 'string' ? size : size.name}
             </div>
           ))}
         </div>
