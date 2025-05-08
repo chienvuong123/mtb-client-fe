@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Flex, Image, Row } from 'antd';
 import UIInput from '@/components/ui/UIInput';
-import { IoMdClose } from 'react-icons/io';
-import { FiSearch } from 'react-icons/fi';
+import { FaChevronLeft } from 'react-icons/fa';
 
-interface ISearchPage {
+interface ISearchMobiPage {
   onClose: () => void;
 }
 
-const SearchPage: React.FC<ISearchPage> = ({ onClose }) => {
+const SearchMobiPage: React.FC<ISearchMobiPage> = ({ onClose }) => {
   const [searchValue, setSearchValue] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -21,16 +20,7 @@ const SearchPage: React.FC<ISearchPage> = ({ onClose }) => {
   }, []);
 
   // Mảng từ khóa tìm kiếm quần áo
-  const trendingKeywords = [
-    'Tập gym',
-    'ECC',
-    'Áo Basic',
-    'Jeans',
-    'Áo khoác',
-    'Quần',
-    'Polo',
-    'Áo thun',
-  ];
+  const trendingKeywords = ['Tập gym', 'ECC', 'Áo Basic', 'Jeans', 'Áo khoác'];
 
   const handleSearch = (keyword: string) => {
     setSearchValue(keyword);
@@ -86,36 +76,23 @@ const SearchPage: React.FC<ISearchPage> = ({ onClose }) => {
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
         }`}
       >
-        <div className="bg-white h-26 flex items-center px-4 mb-2.5">
-          <Row className="w-full">
-            <Flex className="w-full" justify="center" align="center" gap={48}>
-              <Col span={8} className="flex items-center relative">
-                <FiSearch className="absolute top-4 z-2 text-2xl right-4 text-[#80949d]" />
+        <div className="bg-white p-4">
+          <Row>
+            <Flex align="center" className="w-full" gap={10}>
+              <FaChevronLeft
+                className="text-[#7e7e7e] flex-shrink-0"
+                onClick={handleClearSearch}
+              />
+              <div className="w-full">
                 <UIInput
                   placeholder="Tìm kiếm sản phẩm..."
-                  className="!border-none outline-none w-full !bg-[#eeeeee] !h-13.5"
+                  className="border border-[#eeeeee] outline-none w-full bg-[#f3f5f6] h-12"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                 />
-              </Col>
-              <Col span={2} className="flex justify-center items-center">
-                <IoMdClose
-                  className="text-[#666666] cursor-pointer text-3xl"
-                  onClick={handleClearSearch}
-                />
-              </Col>
+              </div>
             </Flex>
-          </Row>
-        </div>
-        <Row
-          className="bg-white p-4 lg:w-[99%] xl:w-[60%] mx-auto rounded-xl px-15 py-10"
-          style={{
-            boxShadow:
-              'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
-          }}
-        >
-          <div>
-            <span className="font-medium text-sm mb-3 block">
+            <span className="font-medium text-sm mt-8 block tracking-[-0.5]">
               Từ khóa nổi bật hôm nay
             </span>
             <div className="flex flex-wrap gap-2 mt-3">
@@ -129,29 +106,42 @@ const SearchPage: React.FC<ISearchPage> = ({ onClose }) => {
                 </button>
               ))}
             </div>
-          </div>
-          <div className="mt-10">
-            <span className="text-sm font-medium">Sản phẩm đã xem gần đây</span>
-            <Row className="mt-3" gutter={16}>
-              {recentlyViewedProducts.map((product) => (
-                <Col span={6} className="cursor-pointer" key={product.id}>
-                  <Image
-                    src={product.image}
-                    alt={product.alt}
-                    className="rounded-xl"
-                    preview={false}
-                  />
-                  <span className="font-medium text-xs block mt-2">
-                    {product.name}
-                  </span>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Row>
+          </Row>
+          <Row className="mt-10">
+            <span className="text-sm font-medium tracking-[-0.5]">
+              Sản phẩm đã xem gần đây
+            </span>
+            <div className="mt-2 overflow-x-auto w-full pb-2 mb-20">
+              <Row
+                gutter={16}
+                className="flex-nowrap"
+                style={{ minWidth: 'max-content' }}
+              >
+                {recentlyViewedProducts.map((product) => (
+                  <Col
+                    className="cursor-pointer"
+                    key={product.id}
+                    style={{ float: 'none' }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.alt}
+                      className="rounded-lg"
+                      preview={false}
+                      width={200}
+                    />
+                    <span className="font-medium text-xs block">
+                      {product.name}
+                    </span>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </Row>
+        </div>
       </div>
     </>
   );
 };
 
-export default SearchPage;
+export default SearchMobiPage;

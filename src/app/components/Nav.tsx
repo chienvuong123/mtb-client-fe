@@ -11,6 +11,7 @@ import {
   MenuProps,
   Row,
   Image,
+  Dropdown,
 } from 'antd';
 import { MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons';
 import DropdownContent from './product-navigation/DropdownContent';
@@ -19,6 +20,15 @@ import DropdownWomen from './product-navigation/DropdownWomen';
 import DropdownCareShare from './product-navigation/DropdownCareShare';
 import RegisterPage from '../register/page';
 import SearchPage from './Search';
+import SearchMobiPage from './SearchMobi';
+import UIQuickCartInfo from '@/components/ui/UIQuickCartInfo';
+import { IoClose } from 'react-icons/io5';
+
+const messages: string[] = [
+  'Hoàn tiền khi mua sắm',
+  'Giảm 50%',
+  'Cho trả hàng',
+];
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,6 +40,12 @@ const Nav: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [showSearchMobi, setShowSearchMobi] = useState<boolean>(false);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [animationState, setAnimationState] = useState<
+    'entering' | 'visible' | 'exiting'
+  >('visible');
 
   const showDrawer = () => {
     setDrawerOpen(true);
@@ -48,6 +64,31 @@ const Nav: React.FC = () => {
   const handleCloseShowSearch = () => {
     setShowSearch(false);
   };
+
+  const handleShowSearchMobi = () => {
+    setShowSearchMobi(true);
+  };
+
+  const handleCloseShowSearchMobi = () => {
+    setShowSearchMobi(false);
+  };
+
+  useEffect(() => {
+    const animationCycle = setInterval(() => {
+      setAnimationState('exiting');
+      setTimeout(() => {
+        setCurrentMessageIndex(
+          (prevIndex) => (prevIndex + 1) % messages.length,
+        );
+        setAnimationState('entering');
+        setTimeout(() => {
+          setAnimationState('visible');
+        }, 500);
+      }, 500);
+    }, 3000);
+
+    return () => clearInterval(animationCycle);
+  }, []);
 
   // Calculate header height on mount and window resize
   useEffect(() => {
@@ -75,6 +116,19 @@ const Nav: React.FC = () => {
 
   const handleMenuLeave = () => {
     setActiveDropdown(null);
+  };
+
+  const getAnimationClass = (): string => {
+    switch (animationState) {
+      case 'entering':
+        return 'translate-x-0 opacity-100 transition-all duration-500';
+      case 'visible':
+        return 'translate-x-0 opacity-100';
+      case 'exiting':
+        return '-translate-x-full opacity-0 transition-all duration-500';
+      default:
+        return '';
+    }
   };
 
   const items: MenuItem[] = [
@@ -110,7 +164,10 @@ const Nav: React.FC = () => {
           <Col xs={2} sm={2} md={0} lg={0} xl={0}>
             <Flex align="center" gap={24}>
               <MenuUnfoldOutlined className="text-lg" />
-              <SearchOutlined className="text-2xl" />
+              <SearchOutlined
+                className="text-2xl"
+                onClick={handleShowSearchMobi}
+              />
             </Flex>
           </Col>
           <Col xs={0} sm={0} md={8} lg={8} xl={8}>
@@ -170,14 +227,53 @@ const Nav: React.FC = () => {
                 preview={false}
                 onClick={showDrawer}
               />
-              <Badge count={3} size="small">
-                <Image
-                  src="/icons/icon-cart.svg"
-                  alt="Logo"
-                  className="cursor-pointer"
-                  preview={false}
-                />
-              </Badge>
+              <Dropdown overlay={<UIQuickCartInfo />}>
+                <Badge count={3} size="small">
+                  <Image
+                    src="/icons/icon-cart.svg"
+                    alt="Logo"
+                    className="cursor-pointer"
+                    preview={false}
+                  />
+                </Badge>
+              </Dropdown>
+              {isLogin && (
+                <div
+                  className="absolute px-4 py-2 bg-white w-56 rounded-lg mt-2 top-15 right-5 z-10 flex flex-col"
+                  style={{
+                    boxShadow:
+                      'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
+                  }}
+                >
+                  <Flex
+                    align="center"
+                    justify="space-between"
+                    className="w-full"
+                  >
+                    <Image
+                      src="/images/login/icon.webp"
+                      alt="coolclup"
+                      width={80}
+                      className="!p-0 !m-0"
+                      preview={false}
+                    />
+                    <IoClose
+                      className="cursor-pointer"
+                      onClick={() => setIsLogin(false)}
+                    />
+                  </Flex>
+                  <span className="!m-0 pt-1 font-medium text-sm tracking-tighter">
+                    Đăng kí mới nhập ngay
+                  </span>
+                  <div className="relative h-6 overflow-hidden">
+                    <div
+                      className={`absolute font-bold text-sm ${getAnimationClass()}`}
+                    >
+                      {messages[currentMessageIndex]}
+                    </div>
+                  </div>
+                </div>
+              )}
             </Flex>
           </Col>
         </Row>
@@ -200,6 +296,11 @@ const Nav: React.FC = () => {
       {showSearch && (
         <div className="absolute z-99 top-0.5">
           <SearchPage onClose={handleCloseShowSearch} />
+        </div>
+      )}
+      {showSearchMobi && (
+        <div className="">
+          <SearchMobiPage onClose={handleCloseShowSearchMobi} />
         </div>
       )}
     </div>
