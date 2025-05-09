@@ -18,7 +18,7 @@ import DropdownContent from './product-navigation/DropdownContent';
 import DropdownSport from './product-navigation/DropdownSport';
 import DropdownWomen from './product-navigation/DropdownWomen';
 import DropdownCareShare from './product-navigation/DropdownCareShare';
-import RegisterPage from '../register/page';
+import RegisterWrapper from '../register/page';
 import SearchPage from './Search';
 import SearchMobiPage from './SearchMobi';
 import UIQuickCartInfo from '@/components/ui/UIQuickCartInfo';
@@ -278,7 +278,7 @@ const Nav: React.FC = () => {
           </Col>
         </Row>
       </Layout.Header>
-      <RegisterPage open={isDrawerOpen} onClose={closeDrawer} />
+      <RegisterWrapper open={isDrawerOpen} onClose={closeDrawer} />
       {/* Global centered dropdown content */}
       {activeDropdown && (
         <div

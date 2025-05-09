@@ -10,7 +10,7 @@ const UISelector = ({ ...props }: UISelectorProps) => {
   return (
     <Select
       {...props}
-      className={`custom-rounded-select !h-10 ${props.className || ''}`}
+      className={`custom-rounded-select !h-10  ${props.className || ''}`}
       dropdownStyle={{ fontWeight: 500 }}
     />
   );
