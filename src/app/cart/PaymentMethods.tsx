@@ -21,16 +21,17 @@ const paymentMethods = [
     label: 'Thanh toán qua ZaloPay',
     image: '/images/payment-methods/zalo-pay.png',
     description: (
-      <div className="flex items-center pl-2">
-        <span className="text-[#7a7a7a] text-xs font-medium pr-1">
+      <div className="flex flex-col md:flex-row items-center pl-2">
+        <span className="text-[#7a7a7a] sm: text-[10px] md:text-xs font-medium pr-1">
           Hỗ trợ mọi hình thức thanh toán
         </span>
-        <Image
-          src="/images/payment-methods/zl-1.png"
-          alt=""
-          preview={false}
-          width={260}
-        />
+        <div className="sm: w-40 md:w-64">
+          <Image
+            src="/images/payment-methods/zl-1.png"
+            alt=""
+            preview={false}
+          />
+        </div>
       </div>
     ),
   },
@@ -40,7 +41,7 @@ const paymentMethods = [
     image: '/images/payment-methods/vnpay.png',
     description: (
       <div className="flex items-center pl-2">
-        <span className="text-[#7a7a7a] text-xs font-medium pr-1">
+        <span className="text-[#7a7a7a] sm: text-[10px] md:text-xs font-medium pr-1">
           Quét QR để thanh toán
         </span>
       </div>
@@ -64,7 +65,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
 
   return (
     <div className="pt-5">
-      <h5 className="text-black text-3xl font-bold mb-5">
+      <h5 className="text-black sm: text-xl md:text-3xl font-bold mb-5 tracking-tight">
         Hình thức thanh toán
       </h5>
       <Radio.Group value={selectedMethod} className="w-full">
@@ -108,7 +109,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
           </div>
         ))}
       </Radio.Group>
-      <span className="font-medium">
+      <span className="font-medium md:block hidden">
         Nếu bạn không hài lòng với sản phẩm của chúng tôi? Bạn hoàn toàn có thể
         trả lại sản phẩm. Tìm hiểu thêm{' '}
         <Link href={'#'} className="!text-[#273bcc] font-medium">

@@ -15,10 +15,6 @@ const Header = () => {
       label: 'CoolClub',
     },
     {
-      key: 'Blog',
-      label: 'Blog',
-    },
-    {
       key: 'CSKH',
       label: 'Trung tâm CSKH',
     },
@@ -47,7 +43,7 @@ const Header = () => {
     <div>
       <Layout.Header className="header">
         <Row justify={'space-between'}>
-          <Col xs={24} sm={24} md={8} lg={12} xl={12}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -57,7 +53,7 @@ const Header = () => {
               onClick={({ key }) => handleMenuClick(key)}
             />
           </Col>
-          <Col xs={0} sm={0} md={8} lg={12} xl={12}>
+          <Col xs={0} sm={0} md={12} lg={12} xl={12}>
             <Menu
               theme="dark"
               mode="horizontal"

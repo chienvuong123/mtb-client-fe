@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Checkbox, Col, Divider, Flex, Image, Row, Select } from 'antd';
+import { Checkbox, Col, Divider, Flex, Image, Row, Select } from 'antd';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import '@styles/cart.css';
 
@@ -71,21 +71,25 @@ const CartItem: React.FC<CartItemProps> = ({
           onChange={(e) => onCheck(item.id, e.target.checked)}
           className="self-start !mt-16 !pr-2"
         />
-        <Image
-          width={120}
-          preview={false}
-          src={item.image}
-          alt={item.name}
-          className="rounded-lg object-cover"
-        />
-        <Flex align="center" className="flex-1">
-          <div className="flex-1">
-            <p className="font-medium text-base">{item.name}</p>
-            <span className="text-gray-500 text-sm font-medium">
+        <Col className="sm: w-36 lg:w-32">
+          <Image
+            preview={false}
+            src={item.image}
+            alt={item.name}
+            className="rounded-lg !object-cover"
+          />
+        </Col>
+        <Flex
+          align="center"
+          className="flex flex-col sm:flex-col md:flex-row flex-1"
+        >
+          <div className="w-full">
+            <p className="font-medium xl:text-base">{item.name}</p>
+            <span className="text-gray-500 sm: text-xs xl:text-sm font-medium">
               {item.color} / {item.size}
             </span>
-            <Row gutter={8} className="w-full py-3">
-              <Col span={9}>
+            <Row gutter={[8, 8]} className="w-full py-3 items-center">
+              <Col xs={9} sm={9} md={4} lg={10} xl={6}>
                 <Select
                   options={colorOptions}
                   value={item.color}
@@ -93,7 +97,7 @@ const CartItem: React.FC<CartItemProps> = ({
                   className="custom-rounded-select-cart-item rounded-md w-full"
                 />
               </Col>
-              <Col span={9}>
+              <Col xs={9} sm={9} md={4} lg={10} xl={6}>
                 <Select
                   options={sizeOptions}
                   value={item.size}
@@ -101,50 +105,49 @@ const CartItem: React.FC<CartItemProps> = ({
                   className="custom-rounded-select-cart-item rounded-md w-full"
                 />
               </Col>
+              <Col xs={24} xl={12} className="flex min-w-0">
+                <Flex align="center" className="w-full lg:justify-end">
+                  <Flex
+                    align="center"
+                    className="rounded-full bg-white border border-gray-300 overflow-hidden"
+                    style={{ height: 35 }}
+                  >
+                    <button
+                      onClick={handleDecrease}
+                      className="flex items-center justify-center w-10 font-bold text-lg border-0 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <div className="px-2 text-sm">{quantity}</div>
+                    <button
+                      onClick={handleIncrease}
+                      className="flex items-center justify-center w-10 font-bold text-lg border-0 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </Flex>
+                  <div className="text-right ml-4">
+                    <p className="font-bold text-base">
+                      {(item.price * quantity).toLocaleString()}đ
+                    </p>
+                    <p className="text-sm text-[#cccccc] font-medium line-through">
+                      {(item.originalPrice * quantity).toLocaleString()}đ
+                    </p>
+                  </div>
+                </Flex>
+              </Col>
             </Row>
-            <Button
-              type="text"
-              icon={<RiDeleteBinLine size={16} />}
+            <div
+              className="flex items-center space-x-1 hover:text-gray-700 cursor-pointer"
               onClick={() => onRemove(item.id)}
-              className="text-gray-500 hover:text-gray-700 mt-2"
             >
-              Xóa
-            </Button>
-          </div>
-          <div className="flex flex-col items-end">
-            <Flex align="center">
-              <Flex
-                align="center"
-                className="rounded-full bg-white border border-gray-300 overflow-hidden"
-                style={{ height: 35 }}
-              >
-                <button
-                  onClick={handleDecrease}
-                  className="flex items-center justify-center w-10 font-bold text-lg border-0 cursor-pointer"
-                >
-                  -
-                </button>
-                <div className="px-2 text-sm">{quantity}</div>
-                <button
-                  onClick={handleIncrease}
-                  className="flex items-center justify-center w-10 font-bold text-lg border-0 cursor-pointer"
-                >
-                  +
-                </button>
-              </Flex>
-              <div className="text-right ml-4">
-                <p className="font-bold text-base">
-                  {item.price.toLocaleString()}đ
-                </p>
-                <p className="text-sm text-[#cccccc] font-medium line-through">
-                  {item.originalPrice.toLocaleString()}đ
-                </p>
-              </div>
-            </Flex>
+              <RiDeleteBinLine size={16} />
+              <span className="font-medium">Xóa</span>
+            </div>
           </div>
         </Flex>
       </div>
-      <Divider className="my-0" />
+      <Divider style={{ margin: '8px 0' }} />
     </>
   );
 };
