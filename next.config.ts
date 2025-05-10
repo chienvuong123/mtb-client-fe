@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/product/:id',
-        destination: '/product-detail/:id',
+        source: '/api/:path*', // Các yêu cầu tới /api/* sẽ được proxy
+        destination: 'http://localhost:3001/:path*',
       },
     ];
   },

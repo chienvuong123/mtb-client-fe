@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "json-server db.json --port 3001",
+    "dev-server": "concurrently \"yarn dev\" \"yarn server\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.74.3",
     "@tanstack/react-query-devtools": "^5.74.3",
     "antd": "^5.24.7",
     "axios": "^1.8.4",
+    "concurrently": "^9.1.2",
+    "json-server": "^1.0.0-beta.3",
     "next": "15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
