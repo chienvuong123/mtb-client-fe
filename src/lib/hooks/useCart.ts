@@ -1,14 +1,17 @@
-import { useCustomQuery } from './useCustomQuery';
-import { useCustomMutation } from './useCustomMutation';
-import { cartApi } from '../api/cart';
+import { cartEndpoints } from '../api/endpoints/cart';
+import { useCustomMutation } from './common/useCustomMutation';
+import { useCustomQuery } from './common/useCustomQuery';
 
 export const useCart = () => {
   // Query để lấy giỏ hàng
-  const { data: cart, isLoading } = useCustomQuery(['cart'], cartApi.getCart);
+  const { data: cart, isLoading } = useCustomQuery(
+    ['cart'],
+    cartEndpoints.getCart,
+  );
 
   // Mutation để thêm sản phẩm vào giỏ hàng
   const { mutate: addToCart, isPending: isAdding } = useCustomMutation(
-    cartApi.addToCart,
+    cartEndpoints.addToCart,
     {
       invalidateQueries: ['cart'],
     },
@@ -17,7 +20,7 @@ export const useCart = () => {
   // Mutation để cập nhật số lượng
   const { mutate: updateQuantity, isPending: isUpdating } = useCustomMutation(
     ({ itemId, quantity }: { itemId: number; quantity: number }) =>
-      cartApi.updateCartItem(itemId, quantity),
+      cartEndpoints.updateCartItem(itemId, quantity),
     {
       invalidateQueries: ['cart'],
     },
@@ -25,7 +28,7 @@ export const useCart = () => {
 
   // Mutation để xóa sản phẩm
   const { mutate: removeItem, isPending: isRemoving } = useCustomMutation(
-    cartApi.removeFromCart,
+    cartEndpoints.removeFromCart,
     {
       invalidateQueries: ['cart'],
     },
@@ -33,7 +36,7 @@ export const useCart = () => {
 
   // Mutation để xóa toàn bộ giỏ hàng
   const { mutate: clearCart, isPending: isClearing } = useCustomMutation(
-    cartApi.clearCart,
+    cartEndpoints.clearCart,
     {
       invalidateQueries: ['cart'],
     },
