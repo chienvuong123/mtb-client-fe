@@ -1,5 +1,5 @@
-import { Cart, CartItem } from '../types/cart';
 import { apiClient } from '../client';
+import { Cart, CartItem } from '../types';
 
 export const cartEndpoints = {
   getCart: () => apiClient.get<Cart>('/cart'),
