@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { RiDiscountPercentFill } from 'react-icons/ri';
 import PaymentMethods from './PaymentMethods';
-import RegisterWrapper from '../register/page';
+import RegisterWrapper from '../register/register';
 
 interface IConfirmPaymentProps {
   onClose: () => void;

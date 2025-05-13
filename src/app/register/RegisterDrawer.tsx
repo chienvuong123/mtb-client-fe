@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Drawer, Col, Flex, Image, Row } from 'antd';
 import UIInput from '@/components/ui/UIInput';

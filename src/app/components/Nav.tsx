@@ -18,7 +18,7 @@ import DropdownContent from './product-navigation/DropdownContent';
 import DropdownSport from './product-navigation/DropdownSport';
 import DropdownWomen from './product-navigation/DropdownWomen';
 import DropdownCareShare from './product-navigation/DropdownCareShare';
-import RegisterWrapper from '../register/page';
+import RegisterWrapper from '../register/register';
 import SearchPage from './Search';
 import SearchMobiPage from './SearchMobi';
 import UIQuickCartInfo from '@/components/ui/UIQuickCartInfo';
@@ -59,10 +59,6 @@ const Nav: React.FC = () => {
   const miniCartData = useMemo(() => {
     return data?.data?.map((item) => item.product_cart) || [];
   }, [data]);
-
-  useEffect(() => {
-    console.log(miniCartData);
-  }, [miniCartData]);
 
   const router = useRouter();
 

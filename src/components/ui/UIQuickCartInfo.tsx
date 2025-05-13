@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Flex, Image } from 'antd';
 import { IoCloseOutline } from 'react-icons/io5';
 import Link from 'next/link';
@@ -10,20 +10,17 @@ interface UIQuickCartInfoProps {
 }
 
 const UIQuickCartInfo: React.FC<UIQuickCartInfoProps> = ({ data }) => {
-  const [products, setProducts] = useState<Product[]>(data);
-
   const { mutate: deleteCart } = useDeleteCart();
 
   const handleRemoveProduct = (id: string): void => {
-    setProducts(products.filter((product) => product.id !== id));
     deleteCart(id);
   };
 
-  const totalPrice: number = products.reduce(
+  const totalPrice: number = data.reduce(
     (sum, product) => sum + product.price * product.quantity,
     0,
   );
-  const totalItems: number = products.length;
+  const totalItems: number = data.length;
 
   return (
     <div
@@ -50,12 +47,12 @@ const UIQuickCartInfo: React.FC<UIQuickCartInfoProps> = ({ data }) => {
       <div
         className="mt-2"
         style={{
-          maxHeight: products.length > 2 ? '280px' : 'auto',
-          overflowY: products.length > 2 ? 'auto' : 'visible',
+          maxHeight: data.length > 2 ? '280px' : 'auto',
+          overflowY: data.length > 2 ? 'auto' : 'visible',
           scrollbarWidth: 'thin',
         }}
       >
-        {products.map((product) => (
+        {data.map((product) => (
           <Flex key={product.id} className="!mt-2" gap={10}>
             <Image
               src={product.image}
@@ -73,9 +70,9 @@ const UIQuickCartInfo: React.FC<UIQuickCartInfoProps> = ({ data }) => {
               </div>
               <div>
                 <span className="text-lg font-medium">
-                  {Number(product.price).toLocaleString()}đ{' '}
+                  {Number(product.discount_price).toLocaleString()}đ{' '}
                   <span className="text-xs text-[#e3e3e3] line-through">
-                    {Number(product.discount_price).toLocaleString()}đ
+                    {Number(product.price).toLocaleString()}đ
                   </span>
                 </span>
                 <p className="text-xs font-medium">x{product.quantity}</p>

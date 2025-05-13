@@ -1,49 +1,49 @@
 'use client';
 
 import CustomBreadcrumb from '@/components/common/CustomBreadcrumb';
-import Product from '@/components/products/Product';
 import UISelector from '@/components/ui/UISelector';
-import { categories, collectionData } from '@/mocks/mockDataCollection';
-import { commonSizes } from '@/mocks/mockDataHomePage';
+import { categories } from '@/mocks/mockDataCollection';
 import { Col, Divider, Flex, Image, Row } from 'antd';
 import { PullRequestOutlined } from '@ant-design/icons';
 import SearchFilter from './SearchFilter';
 import UIDrawer from '@/components/ui/UIDrawer';
-import { useState } from 'react';
-
-const breadcrumbItems = [
-  { title: 'Trang chủ', href: '/' },
-  { title: 'Đồ Nam', href: '/do-nam' },
-  { title: 'Áo Nam', href: '/ao-nam' },
-  { title: '187 Áo Thun Nam' },
-];
+import { useMemo, useState } from 'react';
+import ProductCard from '@/components/products/ProductCard';
+import { useListColections } from '@/lib/api/colectionApi';
 
 const CollectionPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [filteredCollection, setFilteredCollection] = useState(collectionData);
+  const [selectedColors, setSelectedColors] = useState<Record<string, string>>(
+    {},
+  );
+
+  // call api
+  const { data: productList } = useListColections();
+
+  const productData = useMemo(() => {
+    return productList?.data || [];
+  }, [productList]);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  const handleSearch = (filters: {
-    category: string;
-    size: string;
-    colors: string[];
-    materials: string[];
-  }) => {
-    const filtered = collectionData.filter((product) => {
-      const matchesCategory = filters.category
-        ? product.type === filters.category
-        : true;
+  const handleSearch = () => {};
 
-      return matchesCategory;
-    });
-
-    // Cập nhật danh sách sản phẩm
-    return filtered;
-    setFilteredCollection(filtered);
+  const handleColorChange = (productId: string, colorId: string) => {
+    setSelectedColors((prev) => ({
+      ...prev,
+      [productId]: colorId,
+    }));
   };
+
+  const breadcrumbItems = [
+    { title: 'Trang chủ', href: '/' },
+    { title: 'Đồ Nam', href: '/do-nam' },
+    { title: 'Áo Nam', href: '/ao-nam' },
+    { title: `${productData.length} Áo Thun Nam` },
+  ];
+
   return (
     <div className="mt-10 overflow-x-hidden">
       <Row gutter={16}>
@@ -94,7 +94,7 @@ const CollectionPage = () => {
           <Divider />
           <Row className="sm: px-3 md:px-5 lg:pl-5 lg:pr-10">
             <Flex align="center" justify="space-between" className="w-full">
-              <span className="font-bold">187 kết quả</span>
+              <span className="font-bold">{productData.length} kết quả</span>
               <Col sm={0} xs={0} md={12}>
                 <Flex align="center" gap={10} justify="end">
                   <samp className="text-[#808080] uppercase font-medium">
@@ -126,8 +126,8 @@ const CollectionPage = () => {
               </Col>
             </Flex>
             <Col span={24}>
-              <Row gutter={[16, 16]}>
-                {filteredCollection.map((product) => (
+              <Row>
+                {productData.map((product) => (
                   <Col
                     key={product.id}
                     xs={12}
@@ -137,7 +137,12 @@ const CollectionPage = () => {
                     xl={6}
                     className="mt-6"
                   >
-                    <Product product={product} commonSizes={commonSizes} />
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      initialColorId={selectedColors[product.id]}
+                      onColorChange={handleColorChange}
+                    />
                   </Col>
                 ))}
               </Row>
@@ -150,7 +155,7 @@ const CollectionPage = () => {
                 Xem thêm
               </button>
               <p className="text-center text-gray-500 font-medium">
-                Hiển thị1 - 12 trên tổng số 187 sản phẩm
+                Hiển thị1 - 12 trên tổng số {productData.length} sản phẩm
               </p>
             </Flex>
           </Row>

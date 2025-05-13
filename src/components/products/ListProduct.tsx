@@ -99,7 +99,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
             {
               breakpoint: 1024,
               settings: {
-                slidesToShow: 3,
+                slidesToShow: 4,
               },
             },
             {
@@ -123,13 +123,15 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
               <div key={product?.id} className="px-2">
                 <div className="relative rounded-lg overflow-hidden">
                   <div className="group relative overflow-hidden">
-                    <Image
-                      src={mainImage?.image_url}
-                      alt={'anh_san_pham'}
-                      width={500}
-                      height={500}
-                      className="w-full sm: h-[240px] md:h-[260px] lg:h-[350px] xl:h-[350px] 2xl:h-[450px] !object-cover transition-opacity duration-500 group-hover:opacity-0 !rounded-xl"
-                    />
+                    <div className="w-full sm: h-[250px] md:h-[225px] lg:h-[300px] xl:h-[320px] 2xl:h-[460px] rounded-xl overflow-hidden">
+                      <Image
+                        src={mainImage?.image_url}
+                        alt={'anh_san_pham'}
+                        width={500}
+                        height={500}
+                        className="w-full !object-cover transition-opacity duration-500 group-hover:opacity-0 !rounded-xl"
+                      />
+                    </div>
                     <Image
                       src={mainImage?.image_hover}
                       alt={'anh_san_pham_hover'}
@@ -145,7 +147,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
 
                     {/* Đánh giá */}
                     <div className="absolute top-2 left-2 w-full">
-                      <div className="flex items-center justify-between sm:px-1 sm: text-xs md:px-3 md:text-base">
+                      <div className="flex items-center justify-between sm:px-1 sm: text-xs lg:px-3 lg:text-sm">
                         <span className="font-bold">
                           {product?.avg_rating}
                           <StarFilled className="text-xs px-[0.8px]" />
@@ -154,7 +156,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                           </span>
                         </span>
                         {product?.isNew && (
-                          <Tag className="font-bold !bg-[#273BCD] !rounded-full !text-white">
+                          <Tag className="font-bold !text-[10px] !bg-[#273BCD] !rounded-full !text-white">
                             NEW
                           </Tag>
                         )}
@@ -170,7 +172,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                           onClick={() =>
                             handleColorSelection(product.id, colorObj.id)
                           }
-                          className={`sm: w-7 sm: h-4 md:w-10 md:h-5 rounded-full mr-2 cursor-pointer ${
+                          className={`sm: w-7 sm: h-4 md:w-9 md:h-4.5 rounded-full mr-2 cursor-pointer ${
                             selectedColorId === colorObj.id
                               ? ' border-1 border-black'
                               : ''

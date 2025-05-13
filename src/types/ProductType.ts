@@ -35,4 +35,5 @@ export interface IProduct {
   size: Size[];
   slug: string;
   color: Color[];
+  isBuy?: boolean;
 }

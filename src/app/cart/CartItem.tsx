@@ -107,20 +107,20 @@ const CartItem: React.FC<CartItemProps> = ({
                     </button>
                   </Flex>
                   <div className="text-right ml-4">
-                    <p className="font-bold text-base">
-                      {(
-                        Number(item.product_cart.price) * quantity
-                      ).toLocaleString()}
-                      đ
-                    </p>
                     {item.product_cart.discount_price && (
-                      <p className="text-sm text-[#cccccc] font-medium line-through">
+                      <p className="font-bold text-base">
                         {(
                           Number(item.product_cart.discount_price) * quantity
                         ).toLocaleString()}
                         đ
                       </p>
                     )}
+                    <p className="text-sm text-[#cccccc] font-medium line-through">
+                      {(
+                        Number(item.product_cart.price) * quantity
+                      ).toLocaleString()}
+                      đ
+                    </p>
                   </div>
                 </Flex>
               </Col>
