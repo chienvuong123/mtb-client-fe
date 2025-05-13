@@ -4,24 +4,16 @@ import React, { useState } from 'react';
 import { Checkbox, Col, Divider, Flex, Image, Row, Select } from 'antd';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import '@styles/cart.css';
+import { ProductCart } from '@/types/cart';
 
 interface CartItemProps {
-  item: {
-    id: string;
-    name: string;
-    color: string;
-    size: string;
-    price: number;
-    originalPrice: number;
-    quantity: number;
-    image: string;
-  };
+  item: ProductCart;
   checked: boolean;
   onCheck: (id: string | number, checked: boolean) => void;
   onQuantityChange: (id: string | number, quantity: number) => void;
   onColorChange: (id: string | number, color: string) => void;
   onSizeChange: (id: string | number, size: string) => void;
-  onRemove: (id: string | number) => void;
+  onRemove: (id: string) => void;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
@@ -33,21 +25,7 @@ const CartItem: React.FC<CartItemProps> = ({
   onSizeChange,
   onRemove,
 }) => {
-  const [quantity, setQuantity] = useState<number>(item.quantity);
-
-  const colorOptions = [
-    { label: 'Be', value: 'Be' },
-    { label: 'Đen', value: 'Đen' },
-    { label: 'Trắng', value: 'Trắng' },
-  ];
-
-  const sizeOptions = [
-    { label: 'S', value: 'S' },
-    { label: 'M', value: 'M' },
-    { label: 'L', value: 'L' },
-    { label: 'XL', value: 'XL' },
-    { label: '2XL', value: '2XL' },
-  ];
+  const [quantity, setQuantity] = useState<number>(item.product_cart.quantity);
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;
@@ -68,14 +46,14 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="flex items-start space-x-4 py-3 w-full">
         <Checkbox
           checked={checked}
-          onChange={(e) => onCheck(item.id, e.target.checked)}
+          onChange={(e) => onCheck(item?.id, e.target.checked)}
           className="self-start !mt-16 !pr-2"
         />
         <Col className="sm: w-36 lg:w-32">
           <Image
             preview={false}
-            src={item.image}
-            alt={item.name}
+            src={item?.product_cart.image}
+            alt={item?.product_cart.name}
             className="rounded-lg !object-cover"
           />
         </Col>
@@ -84,24 +62,26 @@ const CartItem: React.FC<CartItemProps> = ({
           className="flex flex-col sm:flex-col md:flex-row flex-1"
         >
           <div className="w-full">
-            <p className="font-medium xl:text-base">{item.name}</p>
+            <p className="font-medium xl:text-base">
+              {item?.product_cart.name}
+            </p>
             <span className="text-gray-500 sm: text-xs xl:text-sm font-medium">
-              {item.color} / {item.size}
+              {item?.product_cart.color} / {item?.product_cart.size}
             </span>
             <Row gutter={[8, 8]} className="w-full py-3 items-center">
               <Col xs={9} sm={9} md={4} lg={10} xl={6}>
                 <Select
-                  options={colorOptions}
-                  value={item.color}
-                  onChange={(value) => onColorChange(item.id, value)}
+                  options={item?.color}
+                  value={item?.product_cart.color}
+                  onChange={(value) => onColorChange(item?.id, value)}
                   className="custom-rounded-select-cart-item rounded-md w-full"
                 />
               </Col>
               <Col xs={9} sm={9} md={4} lg={10} xl={6}>
                 <Select
-                  options={sizeOptions}
-                  value={item.size}
-                  onChange={(value) => onSizeChange(item.id, value)}
+                  options={item?.size}
+                  value={item?.product_cart.size}
+                  onChange={(value) => onSizeChange(item?.id, value)}
                   className="custom-rounded-select-cart-item rounded-md w-full"
                 />
               </Col>
@@ -128,11 +108,19 @@ const CartItem: React.FC<CartItemProps> = ({
                   </Flex>
                   <div className="text-right ml-4">
                     <p className="font-bold text-base">
-                      {(item.price * quantity).toLocaleString()}đ
+                      {(
+                        Number(item.product_cart.price) * quantity
+                      ).toLocaleString()}
+                      đ
                     </p>
-                    <p className="text-sm text-[#cccccc] font-medium line-through">
-                      {(item.originalPrice * quantity).toLocaleString()}đ
-                    </p>
+                    {item.product_cart.discount_price && (
+                      <p className="text-sm text-[#cccccc] font-medium line-through">
+                        {(
+                          Number(item.product_cart.discount_price) * quantity
+                        ).toLocaleString()}
+                        đ
+                      </p>
+                    )}
                   </div>
                 </Flex>
               </Col>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Badge,
   Col,
@@ -23,6 +23,8 @@ import SearchPage from './Search';
 import SearchMobiPage from './SearchMobi';
 import UIQuickCartInfo from '@/components/ui/UIQuickCartInfo';
 import { IoClose } from 'react-icons/io5';
+import { useRouter } from 'next/navigation';
+import { useListCarts } from '@/lib/api/cartApi';
 
 const messages: string[] = [
   'Hoàn tiền khi mua sắm',
@@ -46,6 +48,23 @@ const Nav: React.FC = () => {
   const [animationState, setAnimationState] = useState<
     'entering' | 'visible' | 'exiting'
   >('visible');
+
+  // call api
+  const { data } = useListCarts();
+
+  const cartData = useMemo(() => {
+    return data?.data || [];
+  }, [data]);
+
+  const miniCartData = useMemo(() => {
+    return data?.data?.map((item) => item.product_cart) || [];
+  }, [data]);
+
+  useEffect(() => {
+    console.log(miniCartData);
+  }, [miniCartData]);
+
+  const router = useRouter();
 
   const showDrawer = () => {
     setDrawerOpen(true);
@@ -154,6 +173,10 @@ const Nav: React.FC = () => {
     },
   ];
 
+  const handleNavigate = () => {
+    router.push('/cart');
+  };
+
   return (
     <div className="bg-white" ref={headerRef}>
       <Layout.Header
@@ -176,7 +199,8 @@ const Nav: React.FC = () => {
               src="/images/logo-coolmate.png"
               preview={false}
               alt="logo"
-              className="mt-3"
+              className="mt-3 cursor-pointer"
+              onClick={() => router.push('/')}
             />
           </Col>
           <Col
@@ -192,6 +216,7 @@ const Nav: React.FC = () => {
               src="/images/logo-coolmate.png"
               preview={false}
               alt="logo"
+              onClick={() => router.push('/')}
             />
           </Col>
           <Col xs={0} sm={0} md={8} lg={8} xl={8}>
@@ -227,13 +252,14 @@ const Nav: React.FC = () => {
                 preview={false}
                 onClick={showDrawer}
               />
-              <Dropdown overlay={<UIQuickCartInfo />}>
-                <Badge count={3} size="small">
+              <Dropdown overlay={<UIQuickCartInfo data={miniCartData} />}>
+                <Badge count={cartData.length} size="small">
                   <Image
                     src="/icons/icon-cart.svg"
                     alt="Logo"
                     className="cursor-pointer"
                     preview={false}
+                    onClick={handleNavigate}
                   />
                 </Badge>
               </Dropdown>

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import UIInput from '@/components/ui/UIInput';
 import UISelector from '@/components/ui/UISelector';
 import {
@@ -25,6 +25,7 @@ import { HiPercentBadge, HiChevronRight } from 'react-icons/hi2';
 import VoucherWalletModal from './VoucherWalletModal';
 import RegisterWrapper from '../register/page';
 import ConfirmPayment from './ConfirmPayment';
+import { useDeleteCart, useListCarts } from '@/lib/api/cartApi';
 
 const { Text, Link } = Typography;
 
@@ -45,6 +46,23 @@ const CartPage = () => {
   const [isVoucherWallet, setIsVoucherWallet] = useState<boolean>(false);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [isConfirmPayment, setIsConfirmPayment] = useState<boolean>(false);
+  const [shippingFee] = useState<number>(25000);
+
+  const { data } = useListCarts();
+  const { mutate: deleteCart } = useDeleteCart();
+
+  const cartData = useMemo(() => {
+    return data?.data || [];
+  }, [data]);
+
+  // Tính tổng giá trị giỏ hàng với useMemo
+  const cartTotal = useMemo(() => {
+    return cartData.reduce((acc, item) => {
+      const itemTotal =
+        item.product_cart.quantity * Number(item.product_cart.price);
+      return acc + itemTotal;
+    }, 0);
+  }, [cartData]);
 
   const handleChangeAccept = () => {
     setAccept(!accept);
@@ -93,8 +111,8 @@ const CartPage = () => {
     console.log(id, size);
   };
 
-  const handleRemoveItem = (id: string | number) => {
-    console.log(id);
+  const handleRemoveItem = (id: string) => {
+    deleteCart(id);
   };
 
   const handlePaymentMethodChange = (value: string) => {
@@ -315,12 +333,12 @@ const CartPage = () => {
                 <Divider style={{ margin: '8px 0' }} />
 
                 <Row>
-                  {cartItems.map((item) => (
+                  {cartData.map((item) => (
                     <Col span={24} key={item.id}>
                       <CartItem
                         item={item}
                         key={item.id}
-                        checked={checkedList.includes(item.name)}
+                        checked={checkedList.includes(item.product_cart.name)}
                         onCheck={handleItemCheck}
                         onQuantityChange={handleQuantityChange}
                         onColorChange={handleColorChange}
@@ -376,7 +394,7 @@ const CartPage = () => {
                         </span>
                         <div className="text-right">
                           <span className="block text-black font-semibold">
-                            159.000đ
+                            {cartTotal.toLocaleString()}đ
                           </span>
                           <span className="block font-medium text-xs">
                             (tiết kiệm{' '}
@@ -399,7 +417,7 @@ const CartPage = () => {
                           Phí giao hàng
                         </span>
                         <span className="text-black font-semibold">
-                          +25.000đ
+                          +{shippingFee.toLocaleString()}đ
                         </span>
                       </div>
                       <Divider style={{ margin: '10px 2px' }} />
@@ -408,7 +426,7 @@ const CartPage = () => {
                           Tổng
                         </span>
                         <span className="text-black font-bold text-lg">
-                          184.000đ
+                          {(cartTotal + shippingFee).toLocaleString()}đ
                         </span>
                       </div>
                     </div>
@@ -507,14 +525,14 @@ const CartPage = () => {
                     <Text className="font-medium">
                       Thành tiền
                       <span className="!text-xl !text-[#4168d3] !font-bold">
-                        184.000đ
+                        {cartTotal.toLocaleString()}đ
                       </span>
                     </Text>
                   </div>
                   <div className="lg:hidden sm: block mt-3">
                     <Text className="font-medium">
                       <span className="!text-xl !text-[#4168d3] !font-bold">
-                        184.000đ
+                        {cartTotal.toLocaleString()}đ
                       </span>
                       <p className="tracking-tighter font-medium text-end">
                         Tiết kiện0đ

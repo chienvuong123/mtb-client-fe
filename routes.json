@@ -1,0 +1,7 @@
+{
+  "/mini-carts": "/mini-carts",
+  "/mini-carts/:id": "/mini-carts/:id",
+
+  "/cart": "/cart",
+  "/cart/:id": "/cart/:id"
+}

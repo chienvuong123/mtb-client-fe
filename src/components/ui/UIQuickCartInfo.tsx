@@ -1,66 +1,22 @@
 import React, { useState } from 'react';
 import { Flex, Image } from 'antd';
 import { IoCloseOutline } from 'react-icons/io5';
+import Link from 'next/link';
+import { useDeleteCart } from '@/lib/api/cartApi';
+import { Product } from '@/types/cart';
 
-interface Product {
-  id: number;
-  name: string;
-  color: string;
-  size: string;
-  price: number;
-  originalPrice: number;
-  quantity: number;
-  image: string;
+interface UIQuickCartInfoProps {
+  data: Product[];
 }
 
-const initialProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Áo Thun Nam Cotton 220GSM',
-    color: 'Nâu',
-    size: '2XL',
-    price: 159000,
-    originalPrice: 179000,
-    quantity: 1,
-    image: '/images/prod/p4.webp',
-  },
-  {
-    id: 2,
-    name: 'Áo Thun Nam Slim Fit',
-    color: 'Xanh',
-    size: 'L',
-    price: 189000,
-    originalPrice: 209000,
-    quantity: 2,
-    image: '/images/prod/p1.webp',
-  },
-  {
-    id: 3,
-    name: 'Áo Polo Nam Cao Cấp',
-    color: 'Đen',
-    size: 'M',
-    price: 249000,
-    originalPrice: 279000,
-    quantity: 1,
-    image: '/images/prod/p2.webp',
-  },
-  {
-    id: 4,
-    name: 'Áo Sơ Mi Nam Dài Tay',
-    color: 'Trắng',
-    size: 'XL',
-    price: 299000,
-    originalPrice: 329000,
-    quantity: 3,
-    image: '/images/prod/p3.webp',
-  },
-];
+const UIQuickCartInfo: React.FC<UIQuickCartInfoProps> = ({ data }) => {
+  const [products, setProducts] = useState<Product[]>(data);
 
-const UIQuickCartInfo: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const { mutate: deleteCart } = useDeleteCart();
 
-  const handleRemoveProduct = (id: number): void => {
+  const handleRemoveProduct = (id: string): void => {
     setProducts(products.filter((product) => product.id !== id));
+    deleteCart(id);
   };
 
   const totalPrice: number = products.reduce(
@@ -85,14 +41,16 @@ const UIQuickCartInfo: React.FC = () => {
           </span>{' '}
           ( {totalItems} sản phẩm )
         </span>
-        <span className="tracking-tighter font-medium text-[#3b64d2] cursor-pointer">
-          Xem tất cả
-        </span>
+        <Link href="/cart">
+          <span className="tracking-tighter font-medium text-[#3b64d2] cursor-pointer">
+            Xem tất cả
+          </span>
+        </Link>
       </Flex>
       <div
         className="mt-2"
         style={{
-          maxHeight: products.length > 2 ? '200px' : 'auto',
+          maxHeight: products.length > 2 ? '280px' : 'auto',
           overflowY: products.length > 2 ? 'auto' : 'visible',
           scrollbarWidth: 'thin',
         }}
@@ -115,9 +73,9 @@ const UIQuickCartInfo: React.FC = () => {
               </div>
               <div>
                 <span className="text-lg font-medium">
-                  {product.price.toLocaleString('vi-VN')}đ{' '}
+                  {Number(product.price).toLocaleString()}đ{' '}
                   <span className="text-xs text-[#e3e3e3] line-through">
-                    {product.originalPrice.toLocaleString('vi-VN')}đ
+                    {Number(product.discount_price).toLocaleString()}đ
                   </span>
                 </span>
                 <p className="text-xs font-medium">x{product.quantity}</p>
