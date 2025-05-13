@@ -4,6 +4,8 @@ import { IProduct } from '@/types/ProductType';
 import { notification } from 'antd';
 import React from 'react';
 import UIQuickCart from '../ui/UIQuickCart';
+import { useCreateCart } from '@/lib/api/cartApi';
+import { ProductCart, Product } from '@/types/cart';
 
 interface Size {
   id: string;
@@ -24,9 +26,11 @@ const QuickAddToCart: React.FC<QuickAddToCartProps> = ({
   selectedColorId,
 }) => {
   const [api, contextHolder] = notification.useNotification();
+  const { mutate: addToCart } = useCreateCart();
 
   const handleAddToCart = (size: SizeType) => {
     const sizeName = typeof size === 'string' ? size : size.name;
+    const sizeId = typeof size === 'string' ? size : size.id;
 
     const imageUrl =
       product.product_images?.find((img) => img.color_id === selectedColorId)
@@ -34,6 +38,7 @@ const QuickAddToCart: React.FC<QuickAddToCartProps> = ({
     const colorName =
       product.color?.find((c) => c.id === selectedColorId)?.color || '';
 
+    // Dữ liệu hiển thị thông báo nhanh
     const productInfor = {
       image: imageUrl,
       color: colorName,
@@ -42,6 +47,36 @@ const QuickAddToCart: React.FC<QuickAddToCartProps> = ({
       discount: product.discount_price,
     };
 
+    // Dữ liệu cho giỏ hàng chính
+    const productCartItem: Product = {
+      id: product.id,
+      color: colorName,
+      discount_price: Number(product.discount_price) || 0,
+      id_color: selectedColorId || '',
+      id_size: sizeId,
+      image: imageUrl,
+      name: product.name || '',
+      price: Number(product.original_price) || 0,
+      quantity: 1,
+      size: sizeName,
+    };
+
+    // Tạo đối tượng ProductCart để thêm vào giỏ hàng chính
+    const cartData: ProductCart = {
+      id: product.id,
+      product_cart: productCartItem,
+      color: [{ value: selectedColorId || '', lable: colorName }],
+      size: [{ value: sizeId, lable: sizeName }],
+      // id_product: product.id,
+      // id_color:,
+      // id_size:,
+      // quantity: productCartItem.quantity,
+    };
+
+    // Thêm vào giỏ hàng chính
+    addToCart(cartData);
+
+    // Hiển thị thông báo
     api.open({
       message: undefined,
       description: <UIQuickCart size={sizeName} productInfor={productInfor} />,

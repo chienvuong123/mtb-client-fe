@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Áo thun nam",
       "price": 299000,
       "description": "Áo thun nam cotton 100%",
@@ -10,7 +10,7 @@
       "stock": 100
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Quần jean nam",
       "price": 499000,
       "description": "Quần jean nam slim fit",
@@ -19,18 +19,109 @@
       "stock": 50
     }
   ],
-  "cart": {
-    "id": 1,
-    "items": [
-      {
-        "id": 1,
-        "productId": 1,
+  "cart": [
+    {
+      "product_cart": {
+        "id": "1",
+        "image": "/images/prod/p1.webp",
+        "name": "Áo thun nam",
+        "id_color": "",
+        "color": "Nâu",
+        "id_size": "",
+        "size": "XL",
         "quantity": 2,
         "price": 299000,
-        "name": "Áo thun nam",
-        "image": "/images/products/ao-thun.jpg"
-      }
-    ],
-    "total": 598000
-  }
+        "discount_price": 339000
+      },
+      "size": [
+        {
+          "value": "XL",
+          "lable": "XL"
+        },
+        {
+          "value": "XXL",
+          "lable": "XLL"
+        }
+      ],
+      "color": [
+        {
+          "value": "Nâu",
+          "lable": "Nâu"
+        },
+        {
+          "value": "Đen",
+          "lable": "Đen"
+        }
+      ],
+      "id": "4df9"
+    }
+  ],
+  "mini-carts": [
+    {
+      "id": "1",
+      "name": "Áo thun nam cao cấp",
+      "color": "đen",
+      "size": "xl",
+      "price": 300000,
+      "discount_price": 240000,
+      "quantity": 1,
+      "image": "/images/prod/p1.webp"
+    },
+    {
+      "id": "2",
+      "name": "Áo thun nam xanh ngọc",
+      "color": "xanh navy",
+      "size": "xl",
+      "price": 300000,
+      "discount_price": 240000,
+      "quantity": 1,
+      "image": "/images/prod/p4.webp"
+    },
+    {
+      "id": "3",
+      "name": "áo thun nam cao cấp",
+      "color": "",
+      "size": "xl",
+      "price": 300000,
+      "discount_price": 240000,
+      "quantity": 1,
+      "image": "/images/prod/p3.webp"
+    },
+    {
+      "id": "4",
+      "name": "áo thun nam cao cấp",
+      "color": "trắng",
+      "size": "xl",
+      "price": 300000,
+      "discount_price": 240000,
+      "quantity": 1,
+      "image": "/images/prod/p2.webp"
+    }
+  ],
+  "discount": [
+    {
+      "id": "1",
+      "code": "DISCOUNT10",
+      "discount": -10000,
+      "description": "Giảm giá 10% cho đơn hàng đầu tiên",
+      "expiry_date": "2025-12-31",
+      "remaining_quantity": 100
+    },
+    {
+      "id": "2",
+      "code": "FREESHIP",
+      "discount": -30000,
+      "description": "Miễn phí vận chuyển cho đơn hàng trên 500.000đ",
+      "expiry_date": "2025-11-30",
+      "remaining_quantity": 50
+    },
+    {
+      "id": "3",
+      "code": "SALE50",
+      "discount": -50000,
+      "description": "Giảm giá 50.000đ cho đơn hàng trên 1.000.000đ",
+      "expiry_date": "2025-10-31",
+      "remaining_quantity": 20
+    }
+  ]
 }

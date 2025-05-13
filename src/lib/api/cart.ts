@@ -1,10 +1,11 @@
-import { apiClient } from '../react-query/api-client';
+import { apiClient } from './client';
 import { Cart, CartItem } from './types';
 
 export const cartApi = {
   // Lấy giỏ hàng
   getCart: async (): Promise<Cart> => {
     const response = await apiClient.get<Cart>('/cart');
+    console.log(response);
     return response.data;
   },
 
