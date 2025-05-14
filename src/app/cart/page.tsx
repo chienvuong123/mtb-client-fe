@@ -168,10 +168,20 @@ const CartPage = () => {
       {isVoucherWallet || isConfirmPayment ? (
         <>
           {isVoucherWallet && (
-            <VoucherWalletModal onClose={hanldeCloseVoucherWallet} />
+            <VoucherWalletModal
+              onClose={hanldeCloseVoucherWallet}
+              onDiscount={handleChangeVoucher}
+              totalPrice={cartTotal}
+            />
           )}
           {isConfirmPayment && (
-            <ConfirmPayment onClose={handleColseConfirmPayment} />
+            <ConfirmPayment
+              onClose={handleColseConfirmPayment}
+              discount={discount}
+              carts={cartData}
+              totalPrice={cartTotal}
+              totalSavings={totalSavings}
+            />
           )}
         </>
       ) : (
@@ -592,7 +602,7 @@ const CartPage = () => {
                   <div className="lg:hidden sm: block mt-3">
                     <Text className="font-medium">
                       <span className="!text-xl !text-[#4168d3] !font-bold">
-                        {totalDiscountAmount.toLocaleString()}đ
+                        {totalAmount.toLocaleString()}đ
                       </span>
                       <p className="tracking-tighter font-medium text-end">
                         Tiết kiện

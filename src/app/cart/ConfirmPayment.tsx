@@ -6,9 +6,14 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { RiDiscountPercentFill } from 'react-icons/ri';
 import PaymentMethods from './PaymentMethods';
 import RegisterWrapper from '../register/register';
+import { ProductCart } from '@/types/cart';
 
 interface IConfirmPaymentProps {
   onClose: () => void;
+  discount: number;
+  carts: ProductCart[];
+  totalPrice: number;
+  totalSavings: number;
 }
 
 const paymentMethodsToImageMap: Record<string, string> = {
@@ -18,10 +23,17 @@ const paymentMethodsToImageMap: Record<string, string> = {
   VNPAY: '/images/payment-methods/vnpay.png',
 };
 
-const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
+const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({
+  onClose,
+  discount,
+  carts,
+  totalPrice,
+  totalSavings,
+}) => {
   const [accept, setAccept] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState(paymentMethodsToImageMap.COD);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [shippingFee] = useState<number>(25000);
 
   const handleChangeAccept = () => {
     setAccept(!accept);
@@ -35,6 +47,9 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
     const src = paymentMethodsToImageMap[value];
     setImageSrc(src);
   };
+
+  const totalDiscountAmount = totalSavings - shippingFee + discount; // Tổng tiền tiết kiệm
+  const totalAmount = totalPrice + shippingFee - discount; // Tổng tiền sau khi giảm giá
 
   return (
     <div className="py-6 overflow-hidden pb-46">
@@ -186,32 +201,38 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
         <h2 className="font-medium text-xl pb-2 tracking-tight">
           Chi tiết đơn hàng
         </h2>
-        <Flex className="!bg-[#f9f9f9] !p-3 w-full rounded-lg" gap={24}>
-          <Image
-            src="/images/prod/p2.webp"
-            alt="don-hang"
-            preview={false}
-            width={140}
-            className="rounded-lg"
-          />
-          <Flex vertical justify="space-between" className="w-full">
-            <div>
-              <span className="font-medium text-[15px]">
-                Áo Thun Nam Cotton 220GSM
-              </span>
-              <p className="text-[#727472] font-medium text-[13px]">
-                Nâu / 2XL
-              </p>
-            </div>
-            <Flex justify="space-between">
-              <span></span>
-              <div className="text-right">
-                <span>x2</span>
-                <p>318.000đ</p>
+        {carts.map((cart, index) => (
+          <Flex
+            key={index}
+            className="!bg-[#f9f9f9] !p-3 w-full rounded-lg !mb-3"
+            gap={24}
+          >
+            <Image
+              src={cart?.product_cart.image}
+              alt={`sản phẩm}`}
+              preview={false}
+              width={140}
+              className="rounded-lg"
+            />
+            <Flex vertical justify="space-between" className="w-full">
+              <div>
+                <span className="font-medium text-[15px]">
+                  {cart?.product_cart.name}
+                </span>
+                <p className="text-[#727472] font-medium text-[13px]">
+                  {cart?.product_cart.color} / {cart?.product_cart.size}
+                </p>
               </div>
+              <Flex justify="space-between">
+                <span></span>
+                <div className="text-right">
+                  <span>x{cart?.product_cart.quantity}</span>
+                  <p>{cart?.product_cart.price.toLocaleString()}đ</p>
+                </div>
+              </Flex>
             </Flex>
           </Flex>
-        </Flex>
+        ))}
       </Row>
       <Divider className="!border-t-[10px] !border-[#f1f1f1] !my-5" />
       <Flex vertical className="!px-5">
@@ -221,10 +242,15 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
             Tổng tiền
           </span>
           <div className="text-right">
-            <span className="block text-black font-semibold">159.000đ</span>
+            <span className="block text-black font-semibold">
+              {totalPrice.toLocaleString()}đ
+            </span>
             <span className="block font-medium text-xs">
               (tiết kiệm{' '}
-              <span className="text-[#293dcd] font-semibold">20k</span>)
+              <span className="text-[#293dcd] font-semibold">
+                {(totalDiscountAmount / 1000).toLocaleString()}k
+              </span>
+              )
             </span>
           </div>
         </div>
@@ -232,7 +258,9 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
         {/* Giảm giá */}
         <div className="flex justify-between items-center pt-1">
           <span className="text-[#231f20] font-medium text-sm">Giảm giá</span>
-          <span className="text-black font-semibold">0đ</span>
+          <span className="text-black font-semibold">
+            {discount.toLocaleString()}đ
+          </span>
         </div>
 
         {/* Phí giao hàng */}
@@ -246,9 +274,11 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
         <Flex align="center" justify="space-between" className="!pt-2">
           <span className="text-[#231f20] font-bold text-base">Thành tiền</span>
           <div className="text-right">
-            <span className="text-black font-bold text-lg">184.000đ</span>
+            <span className="text-black font-bold text-lg">
+              {totalAmount.toLocaleString()}đ
+            </span>
             <p className="text-[#e84d4d] text-xs font-semibold">
-              (Đã giảm 40.000đ trên giá gốc)
+              (Đã giảm {totalDiscountAmount.toLocaleString()}đ trên giá gốc)
             </p>
           </div>
         </Flex>
@@ -319,10 +349,10 @@ const ConfirmPayment: React.FC<IConfirmPaymentProps> = ({ onClose }) => {
                 <span className="font-medium">
                   <span className="!text-xl !text-[#4168d3] !font-bold tracking-tight">
                     <span className="text-xs text-black">Thành tiền</span>
-                    184.000đ
+                    {totalAmount.toLocaleString()}đ
                   </span>
                   <p className="tracking-tighter font-medium text-left">
-                    Tiết kiệm 40.000đ
+                    Tiết kiệm {totalDiscountAmount.toLocaleString()}đ
                   </p>
                 </span>
               </div>
