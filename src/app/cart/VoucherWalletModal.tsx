@@ -1,15 +1,67 @@
 import UIInput from '@/components/ui/UIInput';
+import { useListDiscounts } from '@/lib/api/discountApi';
+import { IDiscountDto } from '@/types/discountType';
 import { Button, Col, Divider, Flex, Radio, Row } from 'antd';
-import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import React, { useMemo, useState } from 'react';
 import { FaArrowLeft, FaArrowRightLong } from 'react-icons/fa6';
 import { IoClose } from 'react-icons/io5';
 
 interface IVoucherWalletProps {
   onClose: () => void;
+  onDiscount: (discount: IDiscountDto) => void;
+  totalPrice: number;
 }
 
-const VoucherWalletModal: React.FC<IVoucherWalletProps> = ({ onClose }) => {
+const VoucherWalletModal: React.FC<IVoucherWalletProps> = ({
+  onClose,
+  onDiscount,
+  totalPrice,
+}) => {
   const [activeTab, setActiveTab] = useState<'1' | '2'>('1');
+  const [voucherCode, setVoucherCode] = useState<string>('');
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
+  const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(
+    null,
+  );
+  const [message, setMessage] = useState<string>('');
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  const { data: listDiscounts } = useListDiscounts();
+
+  const discountData = useMemo(() => {
+    return listDiscounts?.data || [];
+  }, [listDiscounts]);
+
+  const handleVoucherSelect = (voucher: IDiscountDto): void => {
+    setVoucherCode(voucher.code);
+    setIsButtonActive(true);
+    setSelectedVoucherId(voucher.id);
+  };
+
+  const handleApplyVoucher = (): void => {
+    const selectedVoucher = discountData.find(
+      (voucher) =>
+        voucher.id === selectedVoucherId || voucher.code === voucherCode,
+    );
+
+    if (!selectedVoucher) {
+      setIsButtonActive(false);
+      setVoucherCode('');
+      setSelectedVoucherId(null);
+      return;
+    }
+
+    if (selectedVoucher.min_order_value > totalPrice) {
+      setMessage(
+        `Mã giảm giá ${selectedVoucher.code} chỉ áp dụng cho đơn hàng trên ${selectedVoucher.min_order_value.toLocaleString()}đ`,
+      );
+    } else {
+      setIsSuccess(true);
+      onDiscount(selectedVoucher);
+      setMessage(`Áp dụng thành công voucher ${selectedVoucher.code}`);
+    }
+  };
 
   return (
     <div className="py-6 px-3">
@@ -57,19 +109,38 @@ const VoucherWalletModal: React.FC<IVoucherWalletProps> = ({ onClose }) => {
                   <IoClose className="text-black text-xl" />
                 </span>
               </div>
-              <Row gutter={16} className="mt-6 pb-10 w-full px-3">
+              <Row gutter={16} className="mt-6 w-full px-3">
                 <Col xs={18}>
                   <UIInput
                     placeholder="Nhập mã giảm giá"
+                    value={voucherCode}
                     className="!bg-[#eeeeee] !border-0 rounded-full text-sm w-full"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setVoucherCode(e.target.value)
+                    }
                   />
                 </Col>
                 <Col xs={4}>
-                  <Button className="!bg-[#d9d9d9] !text-[#fffffb] !font-medium !rounded-full !px-4 !py-4.5">
+                  <Button
+                    className={`!rounded-full !px-4 !py-4.5 ${
+                      isButtonActive
+                        ? '!bg-black !text-white'
+                        : '!bg-[#d9d9d9] !text-[#fffffb]'
+                    } !font-medium`}
+                    onClick={handleApplyVoucher}
+                    disabled={!isButtonActive}
+                  >
                     Áp dụng
                   </Button>
                 </Col>
               </Row>
+              <div
+                className={`font-semibold text-sm tracking-tight text-xs ml-4 mb-10 mt-1.5 ${
+                  isSuccess ? 'text-[#4f9f24]' : 'text-[#fc1919]'
+                }`}
+              >
+                {message}
+              </div>
 
               <Divider
                 className="!border-t-[10px] !border-[#dddddd]"
@@ -77,51 +148,85 @@ const VoucherWalletModal: React.FC<IVoucherWalletProps> = ({ onClose }) => {
               />
 
               <Row className="!px-4">
-                <span className="font-bold">Voucher đề xuất cho bạn</span>
-                <div className="mt-8 w-full">
-                  <div className="relative bg-gray-100 h-28 w-64 rounded-lg overflow-hidden w-full">
-                    <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white rounded-full"></div>
-
-                    <div className="absolute left-6 top-0 h-full border-l border-dashed border-[#a8a8a8]">
-                      <Flex
-                        justify="space-between"
-                        className="bg-[#f1f1f1] text-[#a8a8a8] w-full !p-3"
+                <span className="font-bold mb-4">Voucher đề xuất cho bạn</span>
+                <Flex
+                  className="!overflow-x-auto no-scrollbar flex-row"
+                  style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                  }}
+                >
+                  {discountData.map((voucher) => {
+                    const isSelected = selectedVoucherId === voucher.id;
+                    return (
+                      <div
+                        key={voucher.id}
+                        className="relative bg-[#f1f1f1] h-30 !w-90 rounded-lg overflow-hidden mb-3 mr-3 flex-shrink-0 cursor-pointer"
+                        onClick={() => handleVoucherSelect(voucher)}
                       >
-                        <Col span={16}>
-                          <span className="">
-                            <span className="uppercase text-base font-medium">
-                              COolnew
-                            </span>{' '}
-                            <span className="text-sm italic">(Còn 35)</span>
-                          </span>
-                          <p className="text-xs">
-                            [Khách hàng mới] Giảm 30k cho đơn đầu tiên từ 199k
-                            (trừ Outlet, Combo)
-                          </p>
-                          <p className="text-xs pt-5">HSD : 31/05/2025</p>
-                        </Col>
-                        <Col span={8} className="!flex justify-end">
+                        <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white rounded-full"></div>
+                        <div className="absolute left-6 top-0 h-full border-l border-dashed border-[#a8a8a8] pl-1.5">
                           <Flex
-                            vertical
                             justify="space-between"
-                            className="items-end h-full"
+                            className={`bg-[#f1f1f1] ${
+                              isSelected ? 'text-[#231f20]' : 'text-[#a8a8a8]'
+                            } w-full !p-1`}
                           >
-                            <span></span>
-                            <Radio />
-                            <span className="text-xs text-[#274cd4] cursor-pointer">
-                              Điều kiện
-                            </span>
+                            <Col span={16}>
+                              <span className="">
+                                <span
+                                  className={`uppercase text-base font-medium ${
+                                    isSelected ? 'font-bold' : ''
+                                  }`}
+                                >
+                                  {voucher.code}
+                                </span>{' '}
+                                <span className="text-sm italic">
+                                  (Còn {voucher.available_quantity})
+                                </span>
+                              </span>
+                              <p className="text-xs">{voucher.description}</p>
+                              <p className="text-xs pt-5">
+                                HSD :{' '}
+                                {dayjs(voucher.end_date).format('DD/MM/YYYY')}
+                              </p>
+                            </Col>
+                            <Col
+                              span={8}
+                              className="flex justify-end text-right"
+                            >
+                              <Flex
+                                vertical
+                                justify="space-between"
+                                className="items-end h-full"
+                              >
+                                <span></span>
+                                <span className="mr-5">
+                                  <Radio checked={isSelected} />
+                                </span>
+                                <span
+                                  className={`text-xs ${
+                                    isSelected
+                                      ? 'text-[#1677ff]'
+                                      : 'text-[#274cd4]'
+                                  } cursor-pointer`}
+                                >
+                                  Điều kiện
+                                </span>
+                              </Flex>
+                            </Col>
                           </Flex>
-                        </Col>
-                      </Flex>
-                    </div>
-
-                    <div className="pl-6 pr-4 py-4"></div>
+                        </div>
+                        <div className="pl-6 pr-4 py-4"></div>
+                      </div>
+                    );
+                  })}
+                </Flex>
+                {discountData.length <= 0 && (
+                  <div className="bg-[#feeee5] text-[#f95d2e] text-[13px] font-medium px-2 py-1 rounded-md w-[90%]">
+                    ** Đơn hàng chưa thỏa mãn điều kiện áp dụng mã
                   </div>
-                </div>
-                <div className="bg-[#feeee5] text-[#f95d2e] text-[13px] font-medium px-2 py-1 mt-0.5 rounded-md w-[90%]">
-                  ** Đơn hàng chưa thỏa mãn điều kiện áp dụng mã
-                </div>
+                )}
                 <div className="flex justify-center mt-6 w-full">
                   <span className="text-[#b2b2b4] text-sm tracking-tight text-center">
                     -- Đã hiển thị tất cả voucher thuộc Ví Voucher của bạn --

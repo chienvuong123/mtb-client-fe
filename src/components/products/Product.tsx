@@ -50,16 +50,16 @@ const Product = ({ product, commonSizes = [], noHover }: ProductProps) => {
           <Image
             src={product.imageUrl}
             alt={product.title}
-            width={500}
-            height={500}
-            className="w-full sm: h-[240px] md:h-[260px] lg:h-[280px] xl:h-[350px] rounded-lg object-cover transition-opacity duration-500 group-hover:opacity-0"
+            width={300}
+            height={300}
+            className="w-full sm: h-[240px] md:h-[260px] lg:h-[280px] xl:h-[350px] rounded-lg !object-cover transition-opacity duration-500 group-hover:opacity-0"
           />
           <Image
             src={product.hoverImageUrl}
             alt={product.title}
-            width={500}
-            height={500}
-            className="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            width={300}
+            height={300}
+            className="w-full h-full !object-cover absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
 
           <QuickAddToCart sizes={commonSizes} />

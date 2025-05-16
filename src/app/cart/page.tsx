@@ -1,11 +1,10 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import UIInput from '@/components/ui/UIInput';
 import UISelector from '@/components/ui/UISelector';
 import {
   Button,
   Checkbox,
-  CheckboxChangeEvent,
   Col,
   Divider,
   Flex,
@@ -16,16 +15,16 @@ import {
   Typography,
 } from 'antd';
 import { GiftFilled } from '@ant-design/icons';
-import { cartItems } from '@/mocks/mockDataCart';
 import CartItem from './CartItem';
 import DealsPage from './Deals';
 import CouponCard from './CouponCard';
 import PaymentMethods from './PaymentMethods';
 import { HiPercentBadge, HiChevronRight } from 'react-icons/hi2';
 import VoucherWalletModal from './VoucherWalletModal';
-import RegisterWrapper from '../register/page';
+import RegisterWrapper from '../register/register';
 import ConfirmPayment from './ConfirmPayment';
 import { useDeleteCart, useListCarts } from '@/lib/api/cartApi';
+import { IDiscountDto } from '@/types/discountType';
 
 const { Text, Link } = Typography;
 
@@ -38,15 +37,16 @@ const paymentMethodsToImageMap: Record<string, string> = {
 
 const CartPage = () => {
   const [accept, setAccept] = useState<boolean>(false);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
-  const [checkAll, setCheckAll] = useState(false);
-  const [indeterminate, setIndeterminate] = useState(false);
   const [showReferralCode, setShowReferralCode] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState(paymentMethodsToImageMap.COD);
   const [isVoucherWallet, setIsVoucherWallet] = useState<boolean>(false);
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [isConfirmPayment, setIsConfirmPayment] = useState<boolean>(false);
   const [shippingFee] = useState<number>(25000);
+  const [discount, setDiscount] = useState<number>(0);
+
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [isAllChecked, setIsAllChecked] = useState(true);
 
   const { data } = useListCarts();
   const { mutate: deleteCart } = useDeleteCart();
@@ -55,32 +55,45 @@ const CartPage = () => {
     return data?.data || [];
   }, [data]);
 
+  useEffect(() => {
+    if (cartData.length > 0) {
+      const initialCheckedState: Record<string, boolean> = {};
+      cartData.forEach((item) => {
+        initialCheckedState[item.id] = true;
+      });
+      setCheckedItems(initialCheckedState); // mặc định checked tất cả
+    }
+  }, [cartData]);
+
   // Tính tổng giá trị giỏ hàng với useMemo
   const cartTotal = useMemo(() => {
     return cartData.reduce((acc, item) => {
-      const itemTotal =
-        item.product_cart.quantity * Number(item.product_cart.price);
-      return acc + itemTotal;
+      if (checkedItems[item.id]) {
+        const itemTotal =
+          item.product_cart.quantity * Number(item.product_cart.discount_price);
+        return acc + itemTotal;
+      }
+      return acc;
     }, 0);
-  }, [cartData]);
+  }, [cartData, checkedItems]);
+
+  // Tính tổng tiền tiết kiệm giỏ hàng với useMemo
+  const totalSavings = useMemo(() => {
+    return cartData.reduce((acc, item) => {
+      if (checkedItems[item.id]) {
+        const itemSavings =
+          (Number(item.product_cart.price) -
+            Number(item.product_cart.discount_price)) *
+          item.product_cart.quantity;
+
+        return acc + (itemSavings > 0 ? itemSavings : 0);
+      }
+      return acc;
+    }, 0);
+  }, [cartData, checkedItems]);
 
   const handleChangeAccept = () => {
     setAccept(!accept);
-  };
-
-  const plainOptions = cartItems.map((item) => item.name);
-
-  const onCheckAllChange = (e: CheckboxChangeEvent) => {
-    const isChecked = e.target.checked;
-    setCheckedList(isChecked ? plainOptions : []);
-    setCheckAll(isChecked);
-    setIndeterminate(false);
-  };
-
-  const handleClearAll = (): void => {
-    setCheckedList([]);
-    setCheckAll(false);
-    setIndeterminate(false);
   };
 
   const hanldeCloseVoucherWallet = () => {
@@ -95,8 +108,35 @@ const CartPage = () => {
     setDrawerOpen(false);
   };
 
-  const handleItemCheck = (id: string | number, checked: boolean) => {
-    console.log(id, checked);
+  const handleCheck = (id: string | number, checked: boolean) => {
+    setCheckedItems((prev) => {
+      const newState = { ...prev, [id]: checked };
+
+      // Check if all items are checked
+      const allChecked = cartData.every((item) => newState[item.id]);
+      setIsAllChecked(allChecked);
+
+      return newState;
+    });
+  };
+
+  // Handle "Check All" checkbox
+  const handleCheckAll = (checked: boolean) => {
+    setIsAllChecked(checked);
+
+    const newState: Record<string, boolean> = {};
+    cartData.forEach((item) => {
+      newState[item.id] = checked;
+    });
+    setCheckedItems(newState);
+  };
+
+  const handleChangeVoucher = (discount: IDiscountDto) => {
+    if (discount.min_order_value <= cartTotal) {
+      setDiscount(discount.max_discount);
+    } else {
+      setDiscount(0);
+    }
   };
 
   const handleQuantityChange = (id: string | number, quantity: number) => {
@@ -120,15 +160,28 @@ const CartPage = () => {
     setImageSrc(src);
   };
 
+  const totalDiscountAmount = totalSavings - shippingFee + discount; // Tổng tiền tiết kiệm
+  const totalAmount = cartTotal + shippingFee - discount; // Tổng tiền sau khi giảm giá
+
   return (
     <>
       {isVoucherWallet || isConfirmPayment ? (
         <>
           {isVoucherWallet && (
-            <VoucherWalletModal onClose={hanldeCloseVoucherWallet} />
+            <VoucherWalletModal
+              onClose={hanldeCloseVoucherWallet}
+              onDiscount={handleChangeVoucher}
+              totalPrice={cartTotal}
+            />
           )}
           {isConfirmPayment && (
-            <ConfirmPayment onClose={handleColseConfirmPayment} />
+            <ConfirmPayment
+              onClose={handleColseConfirmPayment}
+              discount={discount}
+              carts={cartData}
+              totalPrice={cartTotal}
+              totalSavings={totalSavings}
+            />
           )}
         </>
       ) : (
@@ -300,9 +353,8 @@ const CartPage = () => {
                 <Row>
                   <Col span={16} className="flex space-x-3 mt-4">
                     <Checkbox
-                      indeterminate={indeterminate}
-                      onChange={onCheckAllChange}
-                      checked={checkAll}
+                      checked={isAllChecked}
+                      onChange={(e) => handleCheckAll(e.target.checked)}
                     />
                     <span className="text-[#acacac] font-medium text-xs pl-2">
                       TẤT CẢ SẢN PHẨM
@@ -312,7 +364,7 @@ const CartPage = () => {
                     </span>
                     <span
                       className="text-[#acacac] font-medium text-xs cursor-pointer"
-                      onClick={handleClearAll}
+                      onClick={() => handleCheckAll(false)}
                     >
                       XÓA TẤT CẢ
                     </span>
@@ -338,8 +390,8 @@ const CartPage = () => {
                       <CartItem
                         item={item}
                         key={item.id}
-                        checked={checkedList.includes(item.product_cart.name)}
-                        onCheck={handleItemCheck}
+                        checked={checkedItems[item.id] || false}
+                        onCheck={handleCheck}
                         onQuantityChange={handleQuantityChange}
                         onColorChange={handleColorChange}
                         onSizeChange={handleSizeChange}
@@ -349,7 +401,10 @@ const CartPage = () => {
                   ))}
                 </Row>
                 {/* ưu đãi dành riêng */}
-                <DealsPage />
+                <DealsPage
+                  onDiscount={handleChangeVoucher}
+                  totalPrice={cartTotal}
+                />
                 {/* Mã giới thiệu */}
                 <div className="hidden lg:block">
                   <CouponCard />
@@ -398,7 +453,10 @@ const CartPage = () => {
                           </span>
                           <span className="block font-medium text-xs">
                             (tiết kiệm{' '}
-                            <span className="text-[#293dcd]">20k</span>)
+                            <span className="text-[#293dcd]">
+                              {totalSavings / 1000}k
+                            </span>
+                            )
                           </span>
                         </div>
                       </div>
@@ -408,7 +466,9 @@ const CartPage = () => {
                         <span className="text-[#231f20] font-medium text-sm">
                           Giảm giá
                         </span>
-                        <span className="text-black font-semibold">0đ</span>
+                        <span className="text-black font-semibold">
+                          {discount.toLocaleString()}đ
+                        </span>
                       </div>
 
                       {/* Phí giao hàng */}
@@ -425,8 +485,15 @@ const CartPage = () => {
                         <span className="text-[#231f20] font-bold text-base">
                           Tổng
                         </span>
-                        <span className="text-black font-bold text-lg">
-                          {(cartTotal + shippingFee).toLocaleString()}đ
+                        <span className="text-black font-bold text-lg text-right">
+                          {totalAmount.toLocaleString()}đ
+                          <p className="text-[#ec6161] font-medium text-xs">
+                            (Đã giảm{' '}
+                            <span className="tracking-tight italic">
+                              {totalDiscountAmount.toLocaleString()}
+                            </span>
+                            đ trên giá gốc)
+                          </p>
                         </span>
                       </div>
                     </div>
@@ -505,15 +572,18 @@ const CartPage = () => {
                 </span>
               </Flex>
             </Col>
-            <Col xs={12} lg={0}>
+            <Col
+              xs={8}
+              lg={0}
+              className="lg:!hidden sm: !block bg-white h-25 !flex items-center"
+            >
               <Checkbox
-                indeterminate={indeterminate}
-                onChange={onCheckAllChange}
-                checked={checkAll}
+                checked={isAllChecked}
+                onChange={(e) => handleCheckAll(e.target.checked)}
               />
               <span className="pl-2 font-medium">Tất cả</span>
             </Col>
-            <Col xs={12} sm={12} lg={12} className="bg-white h-25">
+            <Col xs={16} sm={12} lg={12} className="bg-white h-25">
               <Flex
                 align="center"
                 justify="end"
@@ -525,17 +595,18 @@ const CartPage = () => {
                     <Text className="font-medium">
                       Thành tiền
                       <span className="!text-xl !text-[#4168d3] !font-bold">
-                        {cartTotal.toLocaleString()}đ
+                        {totalAmount.toLocaleString()}đ
                       </span>
                     </Text>
                   </div>
                   <div className="lg:hidden sm: block mt-3">
                     <Text className="font-medium">
                       <span className="!text-xl !text-[#4168d3] !font-bold">
-                        {cartTotal.toLocaleString()}đ
+                        {totalAmount.toLocaleString()}đ
                       </span>
                       <p className="tracking-tighter font-medium text-end">
-                        Tiết kiện0đ
+                        Tiết kiện
+                        {totalDiscountAmount.toLocaleString()}đ
                       </p>
                     </Text>
                   </div>
@@ -549,7 +620,10 @@ const CartPage = () => {
                     </Link>{' '}
                     <Text className="font-medium">
                       để hoàn <Text className="font-bold">2.000 CoolCash</Text>{' '}
-                      | Tiết kiệm <Text>0đ</Text>
+                      | Tiết kiệm{' '}
+                      <Text style={{ fontStyle: 'italic' }}>
+                        {totalDiscountAmount.toLocaleString()}đ
+                      </Text>
                     </Text>
                   </div>
                 </Col>

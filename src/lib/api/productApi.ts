@@ -114,6 +114,6 @@ export const useGetProductDetail = (id: string) => {
       axiosInstance.get(
         `${API_ROUTES_COMPANY.product?.detail || '/products'}/${id}`,
       ),
-    enabled: !!id, // Chỉ gọi API khi có id
+    enabled: !!id,
   });
 };

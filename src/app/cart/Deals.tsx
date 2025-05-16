@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import {
   Button,
   Carousel,
@@ -16,54 +16,29 @@ import { LuTicketPercent } from 'react-icons/lu';
 import { productDeals } from '@/mocks/mockDataCart';
 import '@styles/cart.css';
 import UIInput from '@/components/ui/UIInput';
+import { useListDiscounts } from '@/lib/api/discountApi';
+import { IDiscountDto } from '@/types/discountType';
+import dayjs from 'dayjs';
 
-// Define types for voucher data
-interface VoucherData {
-  id: number;
-  code: string;
-  name: string;
-  remaining: number;
-  description: string;
-  expiry: string;
+interface IDealsPageProps {
+  onDiscount: (discount: IDiscountDto) => void;
+  totalPrice: number;
 }
 
-// Mock voucher data
-const voucherData: VoucherData[] = [
-  {
-    id: 1,
-    code: 'COOLNEW30K',
-    name: 'COOLNEW',
-    remaining: 99,
-    description:
-      '[Khách hàng mới] Giảm 30k cho đơn đầu tiên từ 199k (trừ Outlet, Combo)',
-    expiry: '31/05/2025',
-  },
-  {
-    id: 2,
-    code: 'COOLNEW35K',
-    name: 'COOLNEW',
-    remaining: 35,
-    description:
-      '[Khách hàng mới] Giảm 30k cho đơn đầu tiên từ 199k (trừ Outlet, Combo)',
-    expiry: '31/05/2025',
-  },
-  {
-    id: 3,
-    code: 'FREESHIP50K',
-    name: 'FREESHIP',
-    remaining: 27,
-    description: 'Miễn phí vận chuyển cho đơn hàng từ 500k',
-    expiry: '15/07/2025',
-  },
-];
-
-const DealsPage: React.FC = () => {
+const DealsPage: React.FC<IDealsPageProps> = ({ onDiscount, totalPrice }) => {
   const carouselRef = useRef<CarouselRef>(null);
   const [voucherCode, setVoucherCode] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [selectedVoucherId, setSelectedVoucherId] = useState<number | null>(
+  const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(
     null,
   );
+  const [message, setMessage] = useState<string>('');
+
+  const { data: listDiscounts } = useListDiscounts();
+
+  const discountData = useMemo(() => {
+    return listDiscounts?.data || [];
+  }, [listDiscounts]);
 
   const onChange = (currentSlide: number): void => {
     console.log(currentSlide);
@@ -81,10 +56,33 @@ const DealsPage: React.FC = () => {
     }
   };
 
-  const handleVoucherSelect = (voucher: VoucherData): void => {
+  const handleVoucherSelect = (voucher: IDiscountDto): void => {
     setVoucherCode(voucher.code);
     setIsButtonActive(true);
     setSelectedVoucherId(voucher.id);
+  };
+
+  const handleApplyVoucher = (): void => {
+    const selectedVoucher = discountData.find(
+      (voucher) =>
+        voucher.id === selectedVoucherId || voucher.code === voucherCode,
+    );
+
+    if (!selectedVoucher) {
+      setIsButtonActive(false);
+      setVoucherCode('');
+      setSelectedVoucherId(null);
+      return;
+    }
+
+    onDiscount(selectedVoucher);
+    setMessage(
+      selectedVoucher.min_order_value > totalPrice
+        ? `Mã giảm giá ${
+            selectedVoucher.code
+          } chỉ áp dụng cho đơn hàng trên ${selectedVoucher.min_order_value.toLocaleString()}đ`
+        : '',
+    );
   };
 
   return (
@@ -100,7 +98,7 @@ const DealsPage: React.FC = () => {
             msOverflowStyle: 'none',
           }}
         >
-          {voucherData.map((voucher) => {
+          {discountData.map((voucher) => {
             const isSelected = selectedVoucherId === voucher.id;
             return (
               <div
@@ -123,14 +121,16 @@ const DealsPage: React.FC = () => {
                             isSelected ? 'font-bold' : ''
                           }`}
                         >
-                          {voucher.name}
+                          {voucher.code}
                         </span>{' '}
                         <span className="text-sm italic">
-                          (Còn {voucher.remaining})
+                          (Còn {voucher.available_quantity})
                         </span>
                       </span>
                       <p className="text-xs">{voucher.description}</p>
-                      <p className="text-xs pt-5">HSD : {voucher.expiry}</p>
+                      <p className="text-xs pt-5">
+                        HSD : {dayjs(voucher.end_date).format('DD/MM/YYYY')}
+                      </p>
                     </Col>
                     <Col span={8} className="flex justify-end text-right">
                       <Flex
@@ -176,11 +176,16 @@ const DealsPage: React.FC = () => {
                   ? '!bg-black !text-white'
                   : '!bg-[#d9d9d9] !text-[#fffffb]'
               } !font-medium`}
+              onClick={handleApplyVoucher}
+              disabled={!isButtonActive}
             >
               Áp dụng Voucher
             </Button>
           </Col>
         </Row>
+        <span className="text-[#fc1919] font-medium text-sm tracking-tight text-[13px]">
+          {message}
+        </span>
       </div>
       <div className="hidden lg:block">
         <Divider style={{ margin: '10px 0' }} className="" />

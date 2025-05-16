@@ -34,10 +34,11 @@ interface ApiRoutes {
     create: string;
     delete: string;
   };
-  cartMini: {
+  discount: {
     list: string;
-    create: string;
-    delete: string;
+  };
+  collection: {
+    list: string;
   };
 }
 
@@ -102,10 +103,11 @@ const API_ROUTES_COMPANY: ApiRoutes = {
     create: '/cart',
     delete: '/cart',
   },
-  cartMini: {
-    list: '/mini-carts',
-    create: '/mini-carts',
-    delete: '/mini-carts',
+  discount: {
+    list: '/discount',
+  },
+  collection: {
+    list: '/collections',
   },
 };
 

@@ -3,5 +3,8 @@
   "/mini-carts/:id": "/mini-carts/:id",
 
   "/cart": "/cart",
-  "/cart/:id": "/cart/:id"
+  "/cart/:id": "/cart/:id",
+
+  "products": "/products",
+  "products/:id": "/products/:id"
 }
